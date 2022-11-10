@@ -27,44 +27,12 @@ namespace Gust.Core.Controllers
             _signInManager = signInManager;
         }
         
-        // Index
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public string IndexSubmit(string data)
-        {
-            _logger.LogInformation("Model: {data}", data);
-
-            if(data == null)
-            {
-                return JsonConvert.SerializeObject(null);
-            }
-
-            var pruebaForms = JsonConvert.DeserializeObject<PruebaFormsModel>(data);
-
-            if(string.IsNullOrEmpty(pruebaForms.FirstName)) {
-                return JsonConvert.SerializeObject(null);
-            }
-
-            return JsonConvert.SerializeObject(pruebaForms);
-        }
-
-        public IActionResult IndexResult(PruebaFormsModel pruebaForms)
-        {
-            ViewBag.PruebaForms = pruebaForms;
-            return View();
-        }
-
-        // Prestamo
+        // Metodo Con mismo nombre que la vista
         public IActionResult Prestamo()
         {
             return View();
         }
 
-        // Prestamo
         [HttpGet]
         public string GetEquipos()
         {
@@ -80,6 +48,7 @@ namespace Gust.Core.Controllers
             }
         }
 
+        // Metodo para insertar formulario
         [HttpPost]
         public string SubmitPrestamo(string data)
         {

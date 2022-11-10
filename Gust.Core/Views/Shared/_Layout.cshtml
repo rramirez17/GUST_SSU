@@ -33,17 +33,10 @@
                         </li>
                         @if (SignInManager.IsSignedIn(User)){
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Index">Formulario Prueba</a>
-                            </li>
-                        }
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Prestamo">Formulario Prestamo</a>
                             </li>
                         }
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrador"))
-                        {
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrador")){
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                             </li>
