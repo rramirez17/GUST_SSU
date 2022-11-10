@@ -1,4 +1,5 @@
 ﻿using Gust.Core.Areas.Identity.Data.Forms;
+using Gust.Core.Areas.Identity.Data.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,6 +21,9 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
                 .WithMany()
                 .HasForeignKey("LaboratorioId")
                 .HasConstraintName("FK_Equipo_LaboratorioId");
+            builder
+                .HasMany(e => e.Tareas)
+                .WithMany(e => e.Equipos);
 
             builder.Property(u => u.Id)
                 .UseIdentityColumn();

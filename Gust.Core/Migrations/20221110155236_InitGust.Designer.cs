@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gust.Core.Migrations
 {
     [DbContext(typeof(GustCoreContext))]
-    [Migration("20221106205735_InitGust")]
+    [Migration("20221110155236_InitGust")]
     partial class InitGust
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,21 @@ namespace Gust.Core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("EquipoTarea", b =>
+                {
+                    b.Property<int>("EquiposId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TareasId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EquiposId", "TareasId");
+
+                    b.HasIndex("TareasId");
+
+                    b.ToTable("EquipoTarea");
+                });
 
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Equipo", b =>
                 {
@@ -259,20 +274,54 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "34b954e0-5aa6-49a6-80a6-49a1ef4217ed",
+                            Id = "e96a491a-def5-491a-9811-0675125f0285",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "505cbac0-0a85-4b58-92f0-bd81aafa02cf",
+                            ConcurrencyStamp = "2a18074a-d385-4bd3-ad92-89b938cd930d",
                             Email = "luis.villalaz1@utp.ac.pa",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUIS.VILLALAZ1@UTP.AC.PA",
                             NormalizedUserName = "LUIS.VILLALAZ1@UTP.AC.PA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMX78I8GM/JSQdztfVZwxXbdortW7u/AB0eEAsipiM8CKCzozdcQAW7kIN9khPIzyQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPtozq3wu1RzYXrd87lwSlHUv6j8PMpwVej/lVVk3rzPYG9IqbU0er7DVGLRlDLaeQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ea254a5-382c-4f4c-81ed-91c7febd99b9",
+                            SecurityStamp = "640b8e67-39ef-4d2d-bb18-e0dd0abf83e2",
                             TwoFactorEnabled = false,
                             UserName = "luis.villalaz1@utp.ac.pa"
                         });
+                });
+
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Tasks.Tarea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Especificacion")
+                        .IsRequired()
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
+
+                    b.Property<DateTime>("FechaAsignacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaFinalizacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PersonaEncargadaId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaEncargadaId");
+
+                    b.ToTable("Tarea");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -304,15 +353,15 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5ac07c2b-8f05-46af-8c64-dc68ee807910",
-                            ConcurrencyStamp = "86e8b93e-daf4-4d30-b80f-a0b1305e2217",
+                            Id = "f29d68cd-40c6-4731-b1cd-9b7e48a7c8f2",
+                            ConcurrencyStamp = "1294823d-6a92-4269-b1a9-23cb51a6cf70",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "161ebc49-90df-41c1-bd40-a4b1969b5da8",
-                            ConcurrencyStamp = "2a1b8a19-98b0-4759-a1c3-573e4b688e7c",
+                            Id = "7cb96ced-ee1f-4098-b3f4-6312b93edac8",
+                            ConcurrencyStamp = "3989ec9a-0eba-4384-9ed7-7970f44dc931",
                             Name = "Tec",
                             NormalizedName = "TEC"
                         });
@@ -409,8 +458,8 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "34b954e0-5aa6-49a6-80a6-49a1ef4217ed",
-                            RoleId = "5ac07c2b-8f05-46af-8c64-dc68ee807910"
+                            UserId = "e96a491a-def5-491a-9811-0675125f0285",
+                            RoleId = "f29d68cd-40c6-4731-b1cd-9b7e48a7c8f2"
                         });
                 });
 
@@ -433,6 +482,21 @@ namespace Gust.Core.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("EquipoTarea", b =>
+                {
+                    b.HasOne("Gust.Core.Areas.Identity.Data.Forms.Equipo", null)
+                        .WithMany()
+                        .HasForeignKey("EquiposId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gust.Core.Areas.Identity.Data.Tasks.Tarea", null)
+                        .WithMany()
+                        .HasForeignKey("TareasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Equipo", b =>
@@ -470,6 +534,17 @@ namespace Gust.Core.Migrations
                     b.Navigation("PersonaEntrega");
 
                     b.Navigation("PersonaRecibe");
+                });
+
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Tasks.Tarea", b =>
+                {
+                    b.HasOne("Gust.Core.Areas.Identity.Data.GustCoreUser", "PersonaEncargada")
+                        .WithMany()
+                        .HasForeignKey("PersonaEncargadaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaEncargada");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

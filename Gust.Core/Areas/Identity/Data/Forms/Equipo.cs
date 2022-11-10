@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Gust.Core.Areas.Identity.Data.Tasks;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,6 +26,7 @@ namespace Gust.Core.Areas.Identity.Data.Forms
         public int? LaboratorioId { get; set; }
         [ForeignKey("LaboratorioId")]
         public virtual Laboratorio Laboratorio { get; set; }
+        public virtual ICollection<Tarea> Tareas { get; set; }
         [Required]
         [DefaultValue(false)]
         public bool Activo { get; set; }
