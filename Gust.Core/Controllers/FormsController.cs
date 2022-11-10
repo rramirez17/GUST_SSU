@@ -98,7 +98,9 @@ namespace Gust.Core.Controllers
 
                 prestamo.PersonaEntregaId = _signInManager.UserManager.GetUserId(User);
                 
-                var result = _context.Prestamo.Add(prestamo);
+                _context.Prestamo.Add(prestamo);
+                _context.SaveChanges();
+
                 return JsonConvert.SerializeObject(prestamo);
             }
             catch(Exception e)
