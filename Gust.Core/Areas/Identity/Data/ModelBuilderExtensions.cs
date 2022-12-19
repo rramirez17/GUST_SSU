@@ -42,6 +42,11 @@ namespace Gust.Core.Areas.Identity.Data
                 {
                     UserId = users[0].Id,
                     RoleId = roles.First(r => r.Name == "Administrador").Id
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = users[0].Id,
+                    RoleId = roles.First(r => r.Name == "Tec").Id
                 }
             };
 

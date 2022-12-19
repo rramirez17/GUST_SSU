@@ -12,16 +12,16 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
                 .HasName("PK_Prestamo_Id");
 
             builder
-                .HasOne(e => e.PersonaEntrega)
+                .HasOne(e => e.UsuarioEntrega)
                 .WithMany()
-                .HasForeignKey("PersonaEntregaId")
-                .HasConstraintName("FK_Prestamo_PersonaEntregaId");
+                .HasForeignKey("UsuarioEntregaId")
+                .HasConstraintName("FK_Prestamo_UsuarioEntregaId");
 
             builder
-                .HasOne(e => e.PersonaRecibe)
+                .HasOne(e => e.UsuarioRecibe)
                 .WithMany()
-                .HasForeignKey("PersonaRecibeId")
-                .HasConstraintName("FK_Prestamo_PersonaRecibeId");
+                .HasForeignKey("UsuarioRecibeId")
+                .HasConstraintName("FK_Prestamo_UsuarioRecibeId");
 
             builder.Property(u => u.Id)
                 .UseIdentityColumn();
@@ -38,7 +38,7 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
                 .IsRequired(false);
             builder.Property(u => u.FechaDevolucion)
                 .IsRequired(false);
-            builder.Property(u => u.PersonaRecibeId)
+            builder.Property(u => u.UsuarioRecibeId)
                 .IsRequired(false);
         }
     }
