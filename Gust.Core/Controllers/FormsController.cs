@@ -65,7 +65,7 @@ namespace Gust.Core.Controllers
                     throw new Exception("Null Object");
                 }
 
-                prestamo.PersonaEntregaId = _signInManager.UserManager.GetUserId(User);
+                prestamo.UsuarioEntregaId = _signInManager.UserManager.GetUserId(User);
                 
                 _context.Prestamo.Add(prestamo);
                 _context.SaveChanges();
