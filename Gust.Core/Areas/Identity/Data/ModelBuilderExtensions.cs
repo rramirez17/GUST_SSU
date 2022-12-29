@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Gust.Core.Areas.Identity.Data.Forms;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gust.Core.Areas.Identity.Data
@@ -51,6 +52,40 @@ namespace Gust.Core.Areas.Identity.Data
             };
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+
+            // Equipos
+            List<Equipo> equipos = new()
+            {
+                new Equipo
+                {
+                    Id = 1,
+                    CodigoBienesPatrimoniales = "E_PRUEBA_1",
+                    Identificador = "EP1",
+                    NombreEquipo = "Equipo Prueba 1",
+                    Modelo = "Modelo1",
+                    Activo = true
+                },
+                new Equipo
+                {
+                    Id = 2,
+                    CodigoBienesPatrimoniales = "E_PRUEBA_2",
+                    Identificador = "EP2",
+                    NombreEquipo = "Equipo Prueba 2",
+                    Modelo = "Modelo2",
+                    Activo = true
+                },
+                new Equipo
+                {
+                    Id = 3,
+                    CodigoBienesPatrimoniales = "E_PRUEBA_3",
+                    Identificador = "EP3",
+                    NombreEquipo = "Equipo Prueba 3",
+                    Modelo = "Modelo3",
+                    Activo = true
+                }
+            };
+
+            modelBuilder.Entity<Equipo>().HasData(equipos);
         }
     }
 }

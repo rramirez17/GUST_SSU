@@ -97,6 +97,35 @@ namespace Gust.Core.Migrations
                     b.HasIndex("LaboratorioId");
 
                     b.ToTable("Equipo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Activo = true,
+                            CodigoBienesPatrimoniales = "E_PRUEBA_1",
+                            Identificador = "EP1",
+                            Modelo = "Modelo1",
+                            NombreEquipo = "Equipo Prueba 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Activo = true,
+                            CodigoBienesPatrimoniales = "E_PRUEBA_2",
+                            Identificador = "EP2",
+                            Modelo = "Modelo2",
+                            NombreEquipo = "Equipo Prueba 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Activo = true,
+                            CodigoBienesPatrimoniales = "E_PRUEBA_3",
+                            Identificador = "EP3",
+                            Modelo = "Modelo3",
+                            NombreEquipo = "Equipo Prueba 3"
+                        });
                 });
 
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Laboratorio", b =>
@@ -272,17 +301,17 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8ebca3ef-be78-46e2-9542-cee6e7312f66",
+                            Id = "98d6e9a0-9095-4981-99dd-d5928c5cbe58",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a360182a-791a-44a5-aa66-03352902f355",
+                            ConcurrencyStamp = "b4a2e42d-5536-4fbe-938b-26e68a9d1eb6",
                             Email = "luis.villalaz1@utp.ac.pa",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUIS.VILLALAZ1@UTP.AC.PA",
                             NormalizedUserName = "LUIS.VILLALAZ1@UTP.AC.PA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKq5EVcjYpu8JdALjAEVJDIfqrJukNcknjFDEHTZz25W+i8amW0i4UNLOA//4f68FA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENyhsImg5F7XXLhhNZFh70Oet8VMjDlB3yDqjiq798DtyklxKDiGldCGEWv3jaWmjw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c1d8482e-6947-4064-b6f6-ac9ceaf66606",
+                            SecurityStamp = "33afc8af-210d-4c9c-8677-c0ad27a7e116",
                             TwoFactorEnabled = false,
                             UserName = "luis.villalaz1@utp.ac.pa"
                         });
@@ -351,15 +380,15 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a14c90f0-1300-4fc4-ae10-9d763eda2980",
-                            ConcurrencyStamp = "6d6cf783-fca9-4680-a731-3f24012a94e4",
+                            Id = "9f0d7858-17e2-4cd5-93ce-9764c23386da",
+                            ConcurrencyStamp = "26d85b12-2cd5-4cde-aa2d-c359de2eafa4",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "167c10b7-5a33-42b4-8462-319f9659b1c1",
-                            ConcurrencyStamp = "c720c62b-26d7-4a78-b714-94b9b53a7b26",
+                            Id = "a89c23d3-c7cd-41a6-a181-195ad1b36236",
+                            ConcurrencyStamp = "100198ac-71ec-484d-be2b-a05289e72d7e",
                             Name = "Tec",
                             NormalizedName = "TEC"
                         });
@@ -456,13 +485,13 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "8ebca3ef-be78-46e2-9542-cee6e7312f66",
-                            RoleId = "a14c90f0-1300-4fc4-ae10-9d763eda2980"
+                            UserId = "98d6e9a0-9095-4981-99dd-d5928c5cbe58",
+                            RoleId = "9f0d7858-17e2-4cd5-93ce-9764c23386da"
                         },
                         new
                         {
-                            UserId = "8ebca3ef-be78-46e2-9542-cee6e7312f66",
-                            RoleId = "167c10b7-5a33-42b4-8462-319f9659b1c1"
+                            UserId = "98d6e9a0-9095-4981-99dd-d5928c5cbe58",
+                            RoleId = "a89c23d3-c7cd-41a6-a181-195ad1b36236"
                         });
                 });
 
@@ -515,7 +544,7 @@ namespace Gust.Core.Migrations
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Prestamo", b =>
                 {
                     b.HasOne("Gust.Core.Areas.Identity.Data.Forms.Equipo", "Equipo")
-                        .WithMany()
+                        .WithMany("Prestamos")
                         .HasForeignKey("EquipoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -599,6 +628,11 @@ namespace Gust.Core.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Equipo", b =>
+                {
+                    b.Navigation("Prestamos");
                 });
 #pragma warning restore 612, 618
         }

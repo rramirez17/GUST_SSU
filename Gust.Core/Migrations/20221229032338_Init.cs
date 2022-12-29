@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Gust.Core.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -289,27 +289,36 @@ namespace Gust.Core.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "167c10b7-5a33-42b4-8462-319f9659b1c1", "c720c62b-26d7-4a78-b714-94b9b53a7b26", "Tec", "TEC" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a14c90f0-1300-4fc4-ae10-9d763eda2980", "6d6cf783-fca9-4680-a731-3f24012a94e4", "Administrador", "ADMINISTRADOR" });
+                values: new object[,]
+                {
+                    { "9f0d7858-17e2-4cd5-93ce-9764c23386da", "26d85b12-2cd5-4cde-aa2d-c359de2eafa4", "Administrador", "ADMINISTRADOR" },
+                    { "a89c23d3-c7cd-41a6-a181-195ad1b36236", "100198ac-71ec-484d-be2b-a05289e72d7e", "Tec", "TEC" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Cedula", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombre", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Posicion", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8ebca3ef-be78-46e2-9542-cee6e7312f66", 0, null, "a360182a-791a-44a5-aa66-03352902f355", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEKq5EVcjYpu8JdALjAEVJDIfqrJukNcknjFDEHTZz25W+i8amW0i4UNLOA//4f68FA==", null, false, null, "c1d8482e-6947-4064-b6f6-ac9ceaf66606", false, "luis.villalaz1@utp.ac.pa" });
+                values: new object[] { "98d6e9a0-9095-4981-99dd-d5928c5cbe58", 0, null, "b4a2e42d-5536-4fbe-938b-26e68a9d1eb6", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAENyhsImg5F7XXLhhNZFh70Oet8VMjDlB3yDqjiq798DtyklxKDiGldCGEWv3jaWmjw==", null, false, null, "33afc8af-210d-4c9c-8677-c0ad27a7e116", false, "luis.villalaz1@utp.ac.pa" });
+
+            migrationBuilder.InsertData(
+                table: "Equipo",
+                columns: new[] { "Id", "Activo", "CodigoBienesPatrimoniales", "Descripcion", "FechaCompra", "FechaRegistro", "Identificador", "LaboratorioId", "Modelo", "NombreEquipo", "VidaUtilEstimada" },
+                values: new object[,]
+                {
+                    { 1, true, "E_PRUEBA_1", null, null, null, "EP1", null, "Modelo1", "Equipo Prueba 1", null },
+                    { 2, true, "E_PRUEBA_2", null, null, null, "EP2", null, "Modelo2", "Equipo Prueba 2", null },
+                    { 3, true, "E_PRUEBA_3", null, null, null, "EP3", null, "Modelo3", "Equipo Prueba 3", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "167c10b7-5a33-42b4-8462-319f9659b1c1", "8ebca3ef-be78-46e2-9542-cee6e7312f66" });
+                values: new object[] { "9f0d7858-17e2-4cd5-93ce-9764c23386da", "98d6e9a0-9095-4981-99dd-d5928c5cbe58" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "a14c90f0-1300-4fc4-ae10-9d763eda2980", "8ebca3ef-be78-46e2-9542-cee6e7312f66" });
+                values: new object[] { "a89c23d3-c7cd-41a6-a181-195ad1b36236", "98d6e9a0-9095-4981-99dd-d5928c5cbe58" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
