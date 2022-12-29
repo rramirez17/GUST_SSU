@@ -8,6 +8,7 @@ namespace Gust.Core.Areas.Identity.Data.Forms
     public class Equipo
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [MaxLength(20)]
         public string? CodigoBienesPatrimoniales { get; set; }
@@ -27,6 +28,7 @@ namespace Gust.Core.Areas.Identity.Data.Forms
         [ForeignKey("LaboratorioId")]
         public virtual Laboratorio Laboratorio { get; set; }
         public virtual ICollection<Tarea> Tareas { get; set; }
+        public virtual ICollection<Prestamo> Prestamos { get; set; }
         [Required]
         [DefaultValue(false)]
         public bool Activo { get; set; }

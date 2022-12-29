@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Prestamo Page";
+    ViewData["Title"] = "Devolucion Page";
 }
 
 <div class="container">
@@ -8,47 +8,11 @@
     </div>
     <div id="main" class="row justify-content-center">
         <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Formulario de Prestamo</h4>
+            <h4 class="mb-3">Formulario de Devolucion</h4>
             <form id="prestamoForm" class="needs-validation" novalidate>
                 <div class="row g-3">
-                    <div class="col-sm-6">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="" value="" required>
-                        <div class="invalid-feedback">
-                            Nombre es requerido.
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="cedula" class="form-label">Cedula</label>
-                        <input type="text" class="form-control" id="cedula" placeholder="X-XX-XXXX" value="" required>
-                        <div class="invalid-feedback">
-                            Apellido es requerido.
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="duracion" class="form-label">Duracion</label>
-                        <input type="text" class="form-control" id="duracion" placeholder="" value="">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="date" class="form-label">Fecha</label>
-                        <input type="date" class="form-control" id="date" placeholder="" value="" required>
-                    </div>
-
-                    <div class="col-12">
-                        <label for="description" class="form-label">Descripcion</label>
-                        <textarea class="form-control" id="description" rows="2"></textarea>
-                    </div>
-                    
-                </div>
-
-                <hr class="my-4">
-
-                <div class="row g-3">
                     <div class="col-md-5">
-                        <label for="equipo" class="form-label">Equipos</label>
+                        <label for="equipo" class="form-label">Equipos Prestados</label>
                         <select class="form-select" id="equipo" required>
                             <option value="">Cargando...</option>
                         </select>
@@ -65,7 +29,7 @@
         </div>
     </div>
     <div id="second" class="row justify-content-center" hidden>
-        <h4 class="mb-3">Prestamo Registrado</h4>
+        <h4 class="mb-3">Devolucion Registrado</h4>
     </div>
 </div>
 
@@ -76,6 +40,7 @@
 
         // Script para validar form
         $("#prestamoForm").submit(function (event){
+            console.log("SUBMIT");
             event.preventDefault();
             if($('#prestamoForm')[0].checkValidity() === false) {
                 event.stopPropagation();
@@ -87,21 +52,13 @@
         });
 
         function doSubmit() {
-            let url = '@Url.Action("SubmitPrestamo", "Forms")';
-            let prestamo = {
-                NombrePersona: document.getElementById("name").value,
-                CedulaPersona: document.getElementById("cedula").value,
-                Duracion: document.getElementById("duracion").value,
-                FechaInicio: document.getElementById("date").value,
-                Descripcion: document.getElementById("description").value,
-                EquipoId: document.getElementById("equipo").value
-            }
+            let url = '@Url.Action("SubmitDevolucion", "Forms")';
 
             $.ajax({
                 type: "POST",
                 url: url,
                 data: {
-                    data: JSON.stringify(prestamo)
+                    data: document.getElementById("equipo").value
                 },
                 dataType: "json",
                 success: function(results) {
@@ -115,7 +72,7 @@
         }
 
         function PopulateEquipo() {
-            let url = '@Url.Action("GetEquipos", "Forms")';
+            let url = '@Url.Action("GetEquiposPrestados", "Forms")';
 
             $.ajax({
                 type: "GET",
@@ -131,7 +88,7 @@
                     $(results).each(function() {
                         $(document.createElement('option'))
                             .attr('value', this.Id)
-                            .text(this.NombreEquipo)
+                            .text( this.NombrePersona + ', ' + this.NombreEquipo)
                             .appendTo(select);
                     });
                 },

@@ -24,6 +24,9 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
             builder
                 .HasMany(e => e.Tareas)
                 .WithMany(e => e.Equipos);
+            builder
+                .HasMany(e => e.Prestamos)
+                .WithOne(e => e.Equipo);
 
             builder.Property(u => u.Id)
                 .UseIdentityColumn();

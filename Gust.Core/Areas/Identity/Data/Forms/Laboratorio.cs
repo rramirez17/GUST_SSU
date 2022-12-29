@@ -1,10 +1,13 @@
-﻿using Microsoft.Build.Framework;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gust.Core.Areas.Identity.Data.Forms
 {
     public class Laboratorio
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string? Codigo { get; set; }
         public int? CantidadSillas { get; set; }
