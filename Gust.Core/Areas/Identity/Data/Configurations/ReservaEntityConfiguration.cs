@@ -9,19 +9,19 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
         public void Configure(EntityTypeBuilder<Reserva> builder)
         {
             builder.HasKey(i => i.Id)
-                .HasName("PK_Prestamo_Id");
+                .HasName("PK_Reserva_Id");
 
             builder
                 .HasOne(e => e.UsuarioEntrega)
                 .WithMany()
                 .HasForeignKey("UsuarioEntregaId")
-                .HasConstraintName("FK_Prestamo_UsuarioEntregaId");
+                .HasConstraintName("FK_Reserva_UsuarioEntregaId");
 
             builder
                 .HasOne(e => e.UsuarioRecibe)
                 .WithMany()
                 .HasForeignKey("UsuarioRecibeId")
-                .HasConstraintName("FK_Prestamo_UsuarioRecibeId");
+                .HasConstraintName("FK_Reserva_UsuarioRecibeId");
 
             builder.Property(u => u.Id)
                 .UseIdentityColumn();

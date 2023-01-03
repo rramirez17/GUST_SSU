@@ -11,6 +11,7 @@ public class GustCoreContext : IdentityDbContext<GustCoreUser>
     public virtual DbSet<Equipo> Equipo { get; set; }
     public virtual DbSet<Laboratorio> Laboratorio { get; set; }
     public virtual DbSet<Prestamo> Prestamo { get; set; }
+    public virtual DbSet<Reserva> Reserva { get; set; }
 
     public GustCoreContext(DbContextOptions<GustCoreContext> options)
         : base(options)
@@ -26,6 +27,7 @@ public class GustCoreContext : IdentityDbContext<GustCoreUser>
         builder.ApplyConfiguration(new LaboratorioEntityConfiguration());
         builder.ApplyConfiguration(new EquipoEntityConfiguration());
         builder.ApplyConfiguration(new PrestamoEntityConfiguration());
+        builder.ApplyConfiguration(new ReservaEntityConfiguration());
 
         builder.Seed();
     }

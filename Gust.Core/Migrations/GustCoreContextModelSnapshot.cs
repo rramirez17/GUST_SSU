@@ -218,6 +218,60 @@ namespace Gust.Core.Migrations
                     b.ToTable("Prestamo");
                 });
 
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Reserva", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CedulaPersona")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Duracion")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("FechaDevolucion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LabId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombrePersona")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("UsuarioEntregaId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioRecibeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Reserva_Id");
+
+                    b.HasIndex("LabId");
+
+                    b.HasIndex("UsuarioEntregaId");
+
+                    b.HasIndex("UsuarioRecibeId");
+
+                    b.ToTable("Reserva");
+                });
+
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.GustCoreUser", b =>
                 {
                     b.Property<string>("Id")
@@ -301,17 +355,17 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "98d6e9a0-9095-4981-99dd-d5928c5cbe58",
+                            Id = "6c661eb6-f9c6-4394-b72a-bc7408fc1322",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4a2e42d-5536-4fbe-938b-26e68a9d1eb6",
+                            ConcurrencyStamp = "ce0d38b5-a29b-4906-a6bf-3021aa9789b5",
                             Email = "luis.villalaz1@utp.ac.pa",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUIS.VILLALAZ1@UTP.AC.PA",
                             NormalizedUserName = "LUIS.VILLALAZ1@UTP.AC.PA",
-                            PasswordHash = "AQAAAAEAACcQAAAAENyhsImg5F7XXLhhNZFh70Oet8VMjDlB3yDqjiq798DtyklxKDiGldCGEWv3jaWmjw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJG3rkFkOSNH5pI7GF3XBRMoerykgWRayyTvBPi1/yf7Oar/1hy/kjeLlDTFwXhiGA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "33afc8af-210d-4c9c-8677-c0ad27a7e116",
+                            SecurityStamp = "8b0e3fed-de30-429a-b372-664c6324c511",
                             TwoFactorEnabled = false,
                             UserName = "luis.villalaz1@utp.ac.pa"
                         });
@@ -380,15 +434,15 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9f0d7858-17e2-4cd5-93ce-9764c23386da",
-                            ConcurrencyStamp = "26d85b12-2cd5-4cde-aa2d-c359de2eafa4",
+                            Id = "9eb64288-07b4-48a0-8224-14c5cc19499c",
+                            ConcurrencyStamp = "bb9cf94f-25b1-4b04-9392-07c928916ca6",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "a89c23d3-c7cd-41a6-a181-195ad1b36236",
-                            ConcurrencyStamp = "100198ac-71ec-484d-be2b-a05289e72d7e",
+                            Id = "3bcbc5b6-2d66-4574-ac66-eaee3b218ad2",
+                            ConcurrencyStamp = "839f57cb-298a-4f8a-bb02-afd2bca0445a",
                             Name = "Tec",
                             NormalizedName = "TEC"
                         });
@@ -485,13 +539,13 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "98d6e9a0-9095-4981-99dd-d5928c5cbe58",
-                            RoleId = "9f0d7858-17e2-4cd5-93ce-9764c23386da"
+                            UserId = "6c661eb6-f9c6-4394-b72a-bc7408fc1322",
+                            RoleId = "9eb64288-07b4-48a0-8224-14c5cc19499c"
                         },
                         new
                         {
-                            UserId = "98d6e9a0-9095-4981-99dd-d5928c5cbe58",
-                            RoleId = "a89c23d3-c7cd-41a6-a181-195ad1b36236"
+                            UserId = "6c661eb6-f9c6-4394-b72a-bc7408fc1322",
+                            RoleId = "3bcbc5b6-2d66-4574-ac66-eaee3b218ad2"
                         });
                 });
 
@@ -568,6 +622,33 @@ namespace Gust.Core.Migrations
                     b.Navigation("UsuarioRecibe");
                 });
 
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Reserva", b =>
+                {
+                    b.HasOne("Gust.Core.Areas.Identity.Data.Forms.Laboratorio", "Laboratorio")
+                        .WithMany("Reservas")
+                        .HasForeignKey("LabId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gust.Core.Areas.Identity.Data.GustCoreUser", "UsuarioEntrega")
+                        .WithMany()
+                        .HasForeignKey("UsuarioEntregaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Reserva_UsuarioEntregaId");
+
+                    b.HasOne("Gust.Core.Areas.Identity.Data.GustCoreUser", "UsuarioRecibe")
+                        .WithMany()
+                        .HasForeignKey("UsuarioRecibeId")
+                        .HasConstraintName("FK_Reserva_UsuarioRecibeId");
+
+                    b.Navigation("Laboratorio");
+
+                    b.Navigation("UsuarioEntrega");
+
+                    b.Navigation("UsuarioRecibe");
+                });
+
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Tasks.Tarea", b =>
                 {
                     b.HasOne("Gust.Core.Areas.Identity.Data.GustCoreUser", "PersonaEncargada")
@@ -633,6 +714,11 @@ namespace Gust.Core.Migrations
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Equipo", b =>
                 {
                     b.Navigation("Prestamos");
+                });
+
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Forms.Laboratorio", b =>
+                {
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

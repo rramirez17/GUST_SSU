@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Gust.Core.Migrations
 {
-    public partial class Init : Migration
+    public partial class Migrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -225,6 +225,44 @@ namespace Gust.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reserva",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombrePersona = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    CedulaPersona = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Duracion = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FechaDevolucion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LabId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioEntregaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UsuarioRecibeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reserva_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reserva_Laboratorio_LabId",
+                        column: x => x.LabId,
+                        principalTable: "Laboratorio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reserva_UsuarioEntregaId",
+                        column: x => x.UsuarioEntregaId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reserva_UsuarioRecibeId",
+                        column: x => x.UsuarioRecibeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EquipoTarea",
                 columns: table => new
                 {
@@ -291,14 +329,14 @@ namespace Gust.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9f0d7858-17e2-4cd5-93ce-9764c23386da", "26d85b12-2cd5-4cde-aa2d-c359de2eafa4", "Administrador", "ADMINISTRADOR" },
-                    { "a89c23d3-c7cd-41a6-a181-195ad1b36236", "100198ac-71ec-484d-be2b-a05289e72d7e", "Tec", "TEC" }
+                    { "3bcbc5b6-2d66-4574-ac66-eaee3b218ad2", "839f57cb-298a-4f8a-bb02-afd2bca0445a", "Tec", "TEC" },
+                    { "9eb64288-07b4-48a0-8224-14c5cc19499c", "bb9cf94f-25b1-4b04-9392-07c928916ca6", "Administrador", "ADMINISTRADOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Cedula", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombre", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Posicion", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "98d6e9a0-9095-4981-99dd-d5928c5cbe58", 0, null, "b4a2e42d-5536-4fbe-938b-26e68a9d1eb6", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAENyhsImg5F7XXLhhNZFh70Oet8VMjDlB3yDqjiq798DtyklxKDiGldCGEWv3jaWmjw==", null, false, null, "33afc8af-210d-4c9c-8677-c0ad27a7e116", false, "luis.villalaz1@utp.ac.pa" });
+                values: new object[] { "6c661eb6-f9c6-4394-b72a-bc7408fc1322", 0, null, "ce0d38b5-a29b-4906-a6bf-3021aa9789b5", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEJG3rkFkOSNH5pI7GF3XBRMoerykgWRayyTvBPi1/yf7Oar/1hy/kjeLlDTFwXhiGA==", null, false, null, "8b0e3fed-de30-429a-b372-664c6324c511", false, "luis.villalaz1@utp.ac.pa" });
 
             migrationBuilder.InsertData(
                 table: "Equipo",
@@ -313,12 +351,12 @@ namespace Gust.Core.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "9f0d7858-17e2-4cd5-93ce-9764c23386da", "98d6e9a0-9095-4981-99dd-d5928c5cbe58" });
+                values: new object[] { "3bcbc5b6-2d66-4574-ac66-eaee3b218ad2", "6c661eb6-f9c6-4394-b72a-bc7408fc1322" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "a89c23d3-c7cd-41a6-a181-195ad1b36236", "98d6e9a0-9095-4981-99dd-d5928c5cbe58" });
+                values: new object[] { "9eb64288-07b4-48a0-8224-14c5cc19499c", "6c661eb6-f9c6-4394-b72a-bc7408fc1322" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -413,6 +451,21 @@ namespace Gust.Core.Migrations
                 column: "UsuarioRecibeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reserva_LabId",
+                table: "Reserva",
+                column: "LabId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reserva_UsuarioEntregaId",
+                table: "Reserva",
+                column: "UsuarioEntregaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reserva_UsuarioRecibeId",
+                table: "Reserva",
+                column: "UsuarioRecibeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tarea_PersonaEncargadaId",
                 table: "Tarea",
                 column: "PersonaEncargadaId");
@@ -440,6 +493,9 @@ namespace Gust.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Prestamo");
+
+            migrationBuilder.DropTable(
+                name: "Reserva");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

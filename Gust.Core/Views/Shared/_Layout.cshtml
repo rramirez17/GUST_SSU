@@ -47,6 +47,16 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                             </li>
                         }
+                         @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrador") || User.IsInRole("Tec"))){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="PrestamoLab">Formulario Prestamo de Laboratorio</a>
+                            </li>
+                        }
+                        @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrador") || User.IsInRole("Tec"))){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="DevolucionLab">Formulario Devolución de Laboratorio</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <partial name="_LoginPartial"/>

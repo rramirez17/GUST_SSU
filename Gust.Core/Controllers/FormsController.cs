@@ -34,7 +34,15 @@ namespace Gust.Core.Controllers
         {
             return View();
         }
+        public IActionResult PrestamoLab()
+        {
+            return View();
+        }
         public IActionResult Devolucion()
+        {
+            return View();
+        }
+        public IActionResult DevolucionLab()
         {
             return View();
         }
@@ -50,6 +58,24 @@ namespace Gust.Core.Controllers
                     .ToList();
                     
                 return JsonConvert.SerializeObject(equipos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        public string GetLaboratorios()
+        {
+            try
+            {
+                var laboratorios = _context.Laboratorio
+                    .Where(x => x.Activo && x.Reservas.Where(y => y.FechaDevolucion == null).Count() == 0)
+                    .Select(x => new { x.Id, x.Codigo })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(laboratorios);
             }
             catch (Exception e)
             {

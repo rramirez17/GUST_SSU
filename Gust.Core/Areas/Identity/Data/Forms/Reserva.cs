@@ -15,10 +15,10 @@ namespace Gust.Core.Areas.Identity.Data.Forms
         public DateTime? FechaInicio { get; set; }
         public DateTime? FechaDevolucion { get; set; }
 
-        public int EquipoId { get; set; }
+        public int LabId { get; set; }
 
-        [ForeignKey("EquipoId")]
-        public virtual Equipo Equipo { get; set; }
+        [ForeignKey("LabId")]
+        public virtual Laboratorio Laboratorio { get; set; }
 
         public string UsuarioEntregaId { get; set; }
 

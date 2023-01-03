@@ -16,5 +16,6 @@ namespace Gust.Core.Areas.Identity.Data.Forms
         [Required]
         [DefaultValue(false)]
         public bool Activo { get; set; }
+        public virtual ICollection<Reserva> Reservas { get; set; }
     }
 }
