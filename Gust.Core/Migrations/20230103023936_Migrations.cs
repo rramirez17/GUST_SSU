@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -348,6 +349,16 @@ namespace Gust.Core.Migrations
                     { 3, true, "E_PRUEBA_3", null, null, null, "EP3", null, "Modelo3", "Equipo Prueba 3", null }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Laboratorio",
+                columns: new[] { "Id", "Activo", "Codigo", "CantidadSillas", "CantidadMesas", "CantidadComputadoras"},
+                values: new object[,]
+                {
+                    { 1, true, "L_PRUEBA_1", null, null, null},
+                    { 2, true, "L_PRUEBA_1", null, null, null},
+                    { 3, true, "L_PRUEBA_1", null, null, null}
+                });
+                   
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },

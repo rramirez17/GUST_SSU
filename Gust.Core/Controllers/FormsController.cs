@@ -71,7 +71,7 @@ namespace Gust.Core.Controllers
             try
             {
                 var laboratorios = _context.Laboratorio
-                    .Where(x => x.Activo && x.Reservas.Where(y => y.FechaDevolucion == null).Count() == 0)
+                    //.Where(x => x.Activo && x.Reservas.Where(y => y.FechaDevolucion == null).Count() == 0)
                     .Select(x => new { x.Id, x.Codigo })
                     .ToList();
 
@@ -166,6 +166,37 @@ namespace Gust.Core.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // Metodo para insertar formulario reserva lab
+        [HttpPost]
+        public string SubmitReserva(string data)
+        {
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+            try
+            {
+                var reserva = JsonConvert.DeserializeObject<Reserva>(data);
+                if (reserva == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                reserva.UsuarioEntregaId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                _context.Reserva.Add(reserva);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(reserva);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
         }
     }
 }

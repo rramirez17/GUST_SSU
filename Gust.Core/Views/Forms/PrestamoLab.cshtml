@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Prestamo Page";
+}
+
+<div class="container">
+    <div class="row text-center">
+        <h1 class="display-4">Formularios</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Formulario de Prestamo</h4>
+            <form id="prestamoLabForm" class="needs-validation" novalidate>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Nombre es requerido.
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="cedula" class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="cedula" placeholder="X-XX-XXXX" value="" required>
+                        <div class="invalid-feedback">
+                            Apellido es requerido.
+                        </div>
+                    </div>
+                                        
+                    <div class="col-sm-6">
+                        <label for="date" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="date" placeholder="" value="" required>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="duracion" class="form-label">Hora de entrada</label>
+                        <input type="text" class="form-control" id="duracion" placeholder="" value="">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="description" class="form-label">Descripcion</label>
+                        <textarea class="form-control" id="description" rows="2"></textarea>
+                    </div>
+                    
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <label for="salon" class="form-label">Salón</label>
+                        <select class="form-select" id="salon" required>
+                            <option value="">Cargando...</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Selecione un salón válido.
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        PopulateLaboratorio();
+
+        // Script para validar form
+        $("#prestamoLabForm").submit(function (event){
+            console.log("SUBMIT");
+            event.preventDefault();
+            if($('#prestamoLabForm')[0].checkValidity() === false) {
+                event.stopPropagation();
+            } else {
+                //do your ajax submition here
+                doSubmit();
+            }
+            $('#prestamoLabForm').addClass('was-validated');
+        });
+
+        function doSubmit() {
+            let url = '@Url.Action("SubmitReserva", "Forms")';
+            let reserva = {
+                NombrePersona: document.getElementById("name").value,
+                CedulaPersona: document.getElementById("cedula").value,
+                Duracion: document.getElementById("duracion").value,
+                FechaInicio: document.getElementById("date").value,
+                Descripcion: document.getElementById("description").value,
+                LabId: document.getElementById("salon").value
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    data: JSON.stringify(reserva)
+                },
+                dataType: "json",
+                success: function(results) {
+                    console.log("RESULTS")
+                    console.log(results);
+                },
+                error: function() {
+                    alert("Super Error!");
+                }
+            });
+        }
+
+        function PopulateLaboratorio() {
+            let url = '@Url.Action("GetLaboratorios", "Forms")';
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function(results) {
+                    let select = $('#salon');
+
+                    console.log(results);
+                    console.log(select);
+
+                    select.empty();
+                    $(results).each(function() {
+                        $(document.createElement('option'))
+                            .attr('value', this.Id)
+                            .text(this.Codigo)
+                            .appendTo(select);
+                    });
+                },
+                error: function() {
+                    alert("Super Error!");
+                }
+            });
+        }
+    </script>
+}
