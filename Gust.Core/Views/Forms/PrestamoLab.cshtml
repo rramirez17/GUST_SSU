@@ -4,13 +4,24 @@
 
 <div class="container">
     <div class="row text-center">
-        <h1 class="display-4">Formularios</h1>
+        <h1 class="display-4">Universidad Tecnológica de Panamá</h1>
+        <h1 class="display-4">Facultad de Ingeniería de Sistemas Computacionales</h1>
+        <h2 class="display-6">Coordinación de Laboratorios</h2>
+        <h3 class="display-7">Control de Entrada de Salones de Préstamo</h3>
     </div>
-    <div class="row justify-content-center">
+    <div id="main" class="row justify-content-center">
         <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Formulario de Prestamo</h4>
+            <h4 class="mb-3">Préstamo de Salón</h4>
             <form id="prestamoLabForm" class="needs-validation" novalidate>
                 <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="description" class="form-label">Facultad</label>
+                        <input type="text" class="form-control" id="description" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            La facultad es requerida.
+                        </div>
+                    </div>
+
                     <div class="col-sm-6">
                         <label for="name" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="name" placeholder="" value="" required>
@@ -18,6 +29,7 @@
                             Nombre es requerido.
                         </div>
                     </div>
+
 
                     <div class="col-sm-6">
                         <label for="cedula" class="form-label">Cédula</label>
@@ -34,12 +46,7 @@
 
                     <div class="col-sm-6">
                         <label for="duracion" class="form-label">Hora de entrada</label>
-                        <input type="text" class="form-control" id="duracion" placeholder="" value="">
-                    </div>
-
-                    <div class="col-12">
-                        <label for="description" class="form-label">Descripcion</label>
-                        <textarea class="form-control" id="description" rows="2"></textarea>
+                        <input type="time" class="form-control" id="duracion" placeholder="" value="">
                     </div>
                     
                 </div>
@@ -64,10 +71,17 @@
             </form>
         </div>
     </div>
+    <div id="second" class="row justify-content-center" hidden>
+        <h4 class="mb-3">El préstamo se ha registrado correctamente</h4>
+    </div>
 </div>
 
 @section Scripts {
     <script>
+
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()+ ":" + today.getMilliseconds()
+        document.getElementById('duracion').value = time
 
         PopulateLaboratorio();
 
@@ -103,8 +117,8 @@
                 },
                 dataType: "json",
                 success: function(results) {
-                    console.log("RESULTS")
-                    console.log(results);
+                    document.getElementById("main").hidden = true;
+                    document.getElementById("second").hidden = false
                 },
                 error: function() {
                     alert("Super Error!");

@@ -4,20 +4,23 @@
 
 <div class="container">
     <div class="row text-center">
-        <h1 class="display-4">Formularios</h1>
+        <h1 class="display-4">Universidad Tecnológica de Panamá</h1>
+        <h1 class="display-4">Facultad de Ingeniería de Sistemas Computacionales</h1>
+        <h2 class="display-6">Coordinación de Laboratorios</h2>
+        <h3 class="display-7">Control de Entrada de Salones de Préstamo</h3>
     </div>
     <div id="main" class="row justify-content-center">
         <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Formulario de Entrega de Laboratorio</h4>
-            <form id="prestamoForm" class="needs-validation" novalidate>
+            <h4 class="mb-3">Entrega de Salón</h4>
+            <form id="prestamoLabForm" class="needs-validation" novalidate>
                 <div class="row g-3">
                     <div class="col-md-5">
-                        <label for="equipo" class="form-label">Laboratorios en uso</label>
-                        <select class="form-select" id="equipo" required>
+                        <label for="salon" class="form-label">Salones en uso</label>
+                        <select class="form-select" id="salon" required>
                             <option value="">Cargando...</option>
                         </select>
                         <div class="invalid-feedback">
-                            Selecione un laboratorio valido.
+                            Selecione un salón valido.
                         </div>
                     </div>
                 </div>
@@ -52,13 +55,13 @@
         });
 
         function doSubmit() {
-            let url = '@Url.Action("SubmitDevolucion", "Forms")';
+            let url = '@Url.Action("SubmitDevolucionLab", "Forms")';
 
             $.ajax({
                 type: "POST",
                 url: url,
                 data: {
-                    data: document.getElementById("equipo").value
+                    data: document.getElementById("salon").value
                 },
                 dataType: "json",
                 success: function (results) {
@@ -71,15 +74,15 @@
             });
         }
 
-        function PopulateEquipo() {
-            let url = '@Url.Action("GetEquiposPrestados", "Forms")';
+        function PopulateLaboratorio() {
+            let url = '@Url.Action("GetSalones", "Forms")';
 
             $.ajax({
                 type: "GET",
                 url: url,
                 dataType: "json",
                 success: function (results) {
-                    let select = $('#equipo');
+                    let select = $('#salon');
 
                     console.log(results);
                     console.log(select);
@@ -88,7 +91,7 @@
                     $(results).each(function () {
                         $(document.createElement('option'))
                             .attr('value', this.Id)
-                            .text(this.NombrePersona + ', ' + this.NombreEquipo)
+                            .text(this.NombrePersona + ', Salón: ' + this.Codigo)
                             .appendTo(select);
                     });
                 },

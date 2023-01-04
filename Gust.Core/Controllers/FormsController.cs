@@ -71,7 +71,7 @@ namespace Gust.Core.Controllers
             try
             {
                 var laboratorios = _context.Laboratorio
-                    //.Where(x => x.Activo && x.Reservas.Where(y => y.FechaDevolucion == null).Count() == 0)
+                    .Where(x => x.Activo && x.Reservas.Where(y => y.FechaDevolucion == null).Count() == 0)
                     .Select(x => new { x.Id, x.Codigo })
                     .ToList();
 
@@ -96,6 +96,26 @@ namespace Gust.Core.Controllers
                     .ToList();
 
                 return JsonConvert.SerializeObject(prestamos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        [HttpGet]
+        public string GetSalones()
+        {
+            try
+            {
+                var reservas = _context.Reserva
+                    .Where(x => x.FechaDevolucion == null)
+                    .Include(x => x.Laboratorio)
+                    .Select(x => new { x.Id, x.Laboratorio.Codigo, x.NombrePersona })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(reservas);
             }
             catch (Exception e)
             {
@@ -135,39 +155,6 @@ namespace Gust.Core.Controllers
             }
         }
 
-        // Metodo para insertar formulario
-        [HttpPost]
-        public string SubmitDevolucion(int data)
-        {
-            try
-            {
-                var prestamo = _context.Prestamo.Where(x => x.Id == data).ToList().FirstOrDefault();
-                if(prestamo == null)
-                {
-                    return JsonConvert.SerializeObject(null);
-                }
-
-                prestamo.UsuarioRecibeId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                prestamo.FechaDevolucion = DateTime.Now;
-
-                _context.Prestamo.Update(prestamo);
-                _context.SaveChanges();
-
-                return JsonConvert.SerializeObject(prestamo);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error: {e}", e.Message);
-                return JsonConvert.SerializeObject(null);
-            }
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         // Metodo para insertar formulario reserva lab
         [HttpPost]
         public string SubmitReserva(string data)
@@ -198,5 +185,67 @@ namespace Gust.Core.Controllers
                 return JsonConvert.SerializeObject(null);
             }
         }
+
+
+        // Metodo para insertar formulario
+        [HttpPost]
+        public string SubmitDevolucion(int data)
+        {
+            try
+            {
+                var prestamo = _context.Prestamo.Where(x => x.Id == data).ToList().FirstOrDefault();
+                if(prestamo == null)
+                {
+                    return JsonConvert.SerializeObject(null);
+                }
+
+                prestamo.UsuarioRecibeId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                prestamo.FechaDevolucion = DateTime.Now;
+
+                _context.Prestamo.Update(prestamo);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(prestamo);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        // Metodo para insertar formulario
+        [HttpPost]
+        public string SubmitDevolucionLab(int data)
+        {
+            try
+            {
+                var reserva = _context.Reserva.Where(x => x.Id == data).ToList().FirstOrDefault();
+                if (reserva == null)
+                {
+                    return JsonConvert.SerializeObject(null);
+                }
+
+                reserva.UsuarioRecibeId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                reserva.FechaDevolucion = DateTime.Now;
+
+                _context.Reserva.Update(reserva);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(reserva);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
+
