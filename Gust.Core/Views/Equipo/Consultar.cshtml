@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Consultar";
+}
+
+<div class="row text-center">
+    <h1 class="display-4">Consultar Equipo</h1>
+    <br /><br /><br />
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Inventario">Inventario |</a>
+            </div>
+        </div>
+
+        <div class="col-8">
+             <form id="equipoConsultarForm" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="codigoEquipo" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigoEquipo" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Código es requerido.
+                       </div>
+
+                       <label for="numeroActivo" class="form-label">Número de Activo</label>
+                        <input type="text" class="form-control" id="numeroActivo" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                           Número es requerido.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <br /><br />
+                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Registrar</button>
+                    </div>
+                </div>
+             </form>
+        </div>
+
+        <div class="col-2"></div>
+    </div>
+</div>
+
