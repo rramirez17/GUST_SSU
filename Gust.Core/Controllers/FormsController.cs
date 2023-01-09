@@ -174,6 +174,7 @@ namespace Gust.Core.Controllers
 
                 reserva.UsuarioEntregaId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+
                 _context.Reserva.Add(reserva);
                 _context.SaveChanges();
 
