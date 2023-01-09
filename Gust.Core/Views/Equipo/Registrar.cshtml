@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<div class="row text-center">
+    <h1 class="display-4">Registrar Equipo</h1>
+    <br /><br /><br />
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Inventario">Inventario |</a>
+            </div>
+        </div>
+        
+        <div class="col-8">
+            <form id="equipoRegistrarForm" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Nombre es requerido.
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="name" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Apellido es requerido.
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="date" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="date" placeholder="" value="" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <label for="nombreEquipo" class="form-label">Nombre del Equipo</label>
+                        <input type="text" class="form-control" id="nombreEquipo" required />
+
+                        <label for="descripcionEquipo" class="form-label">Descripción del Equipo</label>
+                        <textarea class="form-control" id="descripcionEquipo" rows="5" cols="50" required>Descripcion del Equipo</textarea>
+
+                        <label for="cantidadEquipo" class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidadEquipo" min="1" max="10" required />
+
+                        <label for="numeroArticulo" class="form-label">Número de Artículo</label>
+                        <input type="text" class="form-control" id="numeroArticulo" required />
+
+                        <label for="codigoEquipo" class="form-label">Código de Artículo</label>
+                        <input type="text" class="form-control" id="codigoEquipo" required />
+
+                        <label for="numeroActivo" class="form-label">Número de Activo</label>
+                        <input type="text" class="form-control" id="numeroActivo" required />
+
+                        <label for="vidaUtil" class="form-label">Vida Útil Estimada</label>
+                        <input type="date" class="form-control" id="vidaUtil" placeholder="" value="" required>
+                        <br /><br />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Registrar</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-2"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $("#equipoRegistrarForm").submit(function (event) {
+            event.preventDefault();
+            if ($('#equipoRegistrarForm')[0].checkValidity() === false) {
+                event.stopPropagation();
+            } else {
+                //do your ajax submition here
+                registrarEquipo();
+            }
+            $('#equipoRegistrarForm').addClass('was-validated');
+        });
+
+        function registrarEquipo(){
+            let url = '@Url.Action("registrarEquipo","Equipo")';
+            let equipo = {
+                nombrePersona: document.getElementById("name").value,
+                apellidoPersona: document.getElementById("lastName").value,
+                fecha: document.getElementById("date").value,
+                nombreEquipo: document.getElementById("nombreEquipo").value,
+                descripcionEquipo: document.getElementById("descripcionEquipo").value,
+                cantidadEquipo: document.getElementById("cantidadEquipo").value,
+                numeroArticulo: document.getElementById("numeroArticulo").value,
+                codigoArticulo: document.getElementById("codigoArticulo").value,
+                numeroActivo: document.getElementById("numeroActivo").value,
+                vidaUtil: document.getElementById("vidaUtil").value
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    data: JSON.stringify(equipo)
+                },
+                dataType: "json",
+                success: function(results) {
+                    document.getElementById("main").hidden = true;
+                    document.getElementById("second").hidden = false
+                },
+                error: function() {
+                    alert("Super Error!");
+                }
+            });
+        }
+        
+    </script>
+}
+
