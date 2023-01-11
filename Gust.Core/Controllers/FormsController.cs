@@ -66,6 +66,22 @@ namespace Gust.Core.Controllers
             }
         }
 
+        public string GetEquiposInventario()
+        {
+            try
+            {
+                var equipos = _context.Equipo
+                    .Select(x => new { x.Id, x.NombreEquipo, x.CodigoBienesPatrimoniales})
+                    .ToList();
+
+                return JsonConvert.SerializeObject(equipos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
 
         [HttpGet]
         public string GetTareas()
