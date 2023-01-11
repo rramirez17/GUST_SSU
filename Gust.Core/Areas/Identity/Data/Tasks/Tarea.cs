@@ -15,6 +15,8 @@ namespace Gust.Core.Areas.Identity.Data.Tasks
         public string Especificacion { get; set; }
         public DateTime FechaAsignacion { get; set; }
         public DateTime? FechaFinalizacion { get; set; }
+
+        public string EstadoTarea { get; set; }
         public string PersonaEncargadaId { get; set; }
         [ForeignKey("PersonaEncargadaId")]
         public virtual GustCoreUser PersonaEncargada { get; set; }

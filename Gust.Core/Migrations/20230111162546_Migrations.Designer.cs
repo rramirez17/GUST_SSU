@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gust.Core.Migrations
 {
     [DbContext(typeof(GustCoreContext))]
-    [Migration("20230103023936_Migrations")]
+    [Migration("20230111162546_Migrations")]
     partial class Migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -357,20 +357,37 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6c661eb6-f9c6-4394-b72a-bc7408fc1322",
+                            Id = "77b64aaf-f270-4fe6-b0c6-3718af6ced19",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce0d38b5-a29b-4906-a6bf-3021aa9789b5",
+                            ConcurrencyStamp = "e90dc5cf-1187-4067-8454-61bf3f45c2ca",
                             Email = "luis.villalaz1@utp.ac.pa",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUIS.VILLALAZ1@UTP.AC.PA",
                             NormalizedUserName = "LUIS.VILLALAZ1@UTP.AC.PA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJG3rkFkOSNH5pI7GF3XBRMoerykgWRayyTvBPi1/yf7Oar/1hy/kjeLlDTFwXhiGA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMPxpgnyiQJodQ62KQJrbz5ekoHfBYz4e8R4X0MkZkm/BPbwzIbfae5mVhwOHCNv4g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8b0e3fed-de30-429a-b372-664c6324c511",
+                            SecurityStamp = "64b170e7-4ca3-4594-b64d-ea484fbb2ed5",
                             TwoFactorEnabled = false,
                             UserName = "luis.villalaz1@utp.ac.pa"
                         });
+                });
+
+            modelBuilder.Entity("Gust.Core.Areas.Identity.Data.States.EstadoTarea", b =>
+                {
+                    b.Property<short>("CodigoEstado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("CodigoEstado"), 1L, 1);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CodigoEstado");
+
+                    b.ToTable("EstadoTarea");
                 });
 
             modelBuilder.Entity("Gust.Core.Areas.Identity.Data.Tasks.Tarea", b =>
@@ -385,6 +402,10 @@ namespace Gust.Core.Migrations
                         .IsRequired()
                         .HasMaxLength(35)
                         .HasColumnType("nvarchar(35)");
+
+                    b.Property<string>("EstadoTarea")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaAsignacion")
                         .HasColumnType("datetime2");
@@ -436,15 +457,15 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9eb64288-07b4-48a0-8224-14c5cc19499c",
-                            ConcurrencyStamp = "bb9cf94f-25b1-4b04-9392-07c928916ca6",
+                            Id = "fc2e50c4-b652-46d7-b025-cbf92b42bb38",
+                            ConcurrencyStamp = "501d5b77-8a97-4e71-ab01-222cbf092c71",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "3bcbc5b6-2d66-4574-ac66-eaee3b218ad2",
-                            ConcurrencyStamp = "839f57cb-298a-4f8a-bb02-afd2bca0445a",
+                            Id = "9bb6727e-7751-4754-b332-d89577981437",
+                            ConcurrencyStamp = "3c332d7d-d63b-4cd5-bbb1-46c5d0508af2",
                             Name = "Tec",
                             NormalizedName = "TEC"
                         });
@@ -541,13 +562,13 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "6c661eb6-f9c6-4394-b72a-bc7408fc1322",
-                            RoleId = "9eb64288-07b4-48a0-8224-14c5cc19499c"
+                            UserId = "77b64aaf-f270-4fe6-b0c6-3718af6ced19",
+                            RoleId = "fc2e50c4-b652-46d7-b025-cbf92b42bb38"
                         },
                         new
                         {
-                            UserId = "6c661eb6-f9c6-4394-b72a-bc7408fc1322",
-                            RoleId = "3bcbc5b6-2d66-4574-ac66-eaee3b218ad2"
+                            UserId = "77b64aaf-f270-4fe6-b0c6-3718af6ced19",
+                            RoleId = "9bb6727e-7751-4754-b332-d89577981437"
                         });
                 });
 

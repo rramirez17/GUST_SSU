@@ -66,6 +66,26 @@ namespace Gust.Core.Controllers
             }
         }
 
+
+        [HttpGet]
+        public string GetTareas()
+        {
+            try
+            {
+                var tareas = _context.Tarea
+                    .Where(x => x.EstadoTarea == "En progreso" || x.EstadoTarea == "Sin iniciar")
+                    .Select(x => new { x.Id})
+                    .ToList();
+
+                return JsonConvert.SerializeObject(tareas);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
         public string GetLaboratorios()
         {
             try

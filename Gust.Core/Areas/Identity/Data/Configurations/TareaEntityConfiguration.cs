@@ -13,6 +13,12 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
                 .HasName("PK_Tarea_Id");
 
             builder
+                .HasOne(e => e.EstadoTarea)
+                .WithMany()
+                .HasForeignKey("EstadoTarea")
+                .HasConstraintName("FK_Tarea_EstadoTareaId");
+
+            builder
                 .HasOne(e => e.PersonaEncargada)
                 .WithMany()
                 .HasForeignKey("PersonaEncargadaId")
