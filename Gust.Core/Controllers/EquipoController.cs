@@ -53,5 +53,103 @@ namespace Gust.Core.Controllers
         {
             return View();
         }
+
+
+        // Metodo para registrar un equipo
+        [HttpPost]
+        public string registrarEquipo(string data)
+        {
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+            try
+            {
+                var registro = JsonConvert.DeserializeObject<Equipo>(data);
+                if (registro == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                _context.Equipo.Add(registro);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(registro);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+
+        [HttpGet]
+        public string GetEquiposInventario()
+        {
+            try
+            {
+                var equipos = _context.Equipo
+                    .Select(x => new { x.Id, x.NombreEquipo, x.Modelo })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(equipos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        [HttpGet]
+        public string GetEquipoByCodigo (string data)
+        {
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+            try
+            {
+                var registro = JsonConvert.DeserializeObject<Equipo>(data);
+                if (registro == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                var equipoConsultado = _context.Equipo
+                    .Where(x => x.CodigoBienesPatrimoniales == registro.CodigoBienesPatrimoniales)
+                    .Select(x => new { x.Id, x.NombreEquipo, x.Modelo, x.VidaUtilEstimada })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(equipoConsultado);
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        [HttpGet]
+        public string GetLaboratorios()
+        {
+            try
+            {
+                var laboratorios = _context.Laboratorio
+                    .Select(x => new { x.Id, x.Codigo })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(laboratorios);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
     }
 }

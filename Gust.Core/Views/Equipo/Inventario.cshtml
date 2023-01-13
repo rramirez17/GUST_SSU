@@ -30,4 +30,37 @@
             <div class="col-3"></div>
         </div>
     </div>
+
+    <div class="row">
+    </div>
 </div>
+
+@section Scripts{
+    <script>
+        recuperarEquipos();
+
+        function recuperarEquipos() {
+            let url = '@Url.Action("GetEquiposInventario", "Equipo")';
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (per) {
+                    for (var i = 0; i < per.results.length; i++) {
+                        var nombre = $("<div class='col-4'></div>");
+                        var modelo = $("<div class='col-4'></div>");
+                        var vida = $("<div class='col-4'></div>");
+                        nombre.append(per.results[i].NombreEquipo);
+                        modelo.append(per.results[i].Modelo);
+                        $("div .row").append(nombre);
+                        $("div .row").append(modelo);
+                    }
+                }
+                error: function () {
+                    alert("Super Error!");
+                }
+            });
+        }
+    </script>
+}
