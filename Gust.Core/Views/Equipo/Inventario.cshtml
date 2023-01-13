@@ -32,6 +32,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Nombre</th>
                     <th>Modelo</th>
                 </tr>
@@ -41,14 +42,12 @@
             </tbody>
         </table>
     </div>
-    <div class="row">
-    </div>
+    <div class="row"></div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
         recuperarEquipos();
-
         function recuperarEquipos() {
             let url = '@Url.Action("GetEquiposInventario", "Equipo")';
 
@@ -59,16 +58,35 @@
                 success: function (per) {
                     console.log(per);
                     console.log(per.length);
-                    /*for (var i = 0; i < per.length; i++) {
-                        var nombre = $("<tr><td></td></tr>");
-                        var modelo = $("<tr><td></td></tr>");
-                        var vida = $("<tr><td></td></tr>");
+               
+                    /*let xmlDoc = $.parseXML(per);
+                    let xml = $(xmlDoc);
+                    let equipos = xml.find("Table");*/
+                    let rows = '';
+
+                    for (var i = 0; i < per.length; i++) {
+                        let id = $(this).find("Id").text();
+                        let name = $(this).find("NombreEquipo").text();
+                        let modelo = $(this).find("Modelo").text();
+                        console.log(id);
+                        console.log(name);
+                        console.log(modelo);
+
+                        rows += "<tr><td>" + per[i].Id + "</td><td>" + per[i].NombreEquipo + ' ' + "</td><td>" + per[i].Modelo + "</td></tr>";
+                        console.log(rows);
+                    }
+                    $('.table tbody').append(rows);
+
+                    /*for (let i = 0; i < per.length; i++) {
+                        let nombre = $("<tr><td></td></tr>");
+                        let modelo = $("<tr><td></td></tr>");
+                        let vida = $("<tr><td></td></tr>");
                         nombre.append(per[i].NombreEquipo);
                         modelo.append(per[i].Modelo);
                         $("tbody .table-info").append(nombre);
                         $("tbody .table-info").append(modelo);
                     }*/
-                }
+                },
                 error: function () {
                     alert("Super Error!");
                     conole.log("Super Error!");
