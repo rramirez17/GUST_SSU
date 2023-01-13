@@ -99,12 +99,6 @@
                                                     <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Actualizar">Actualización de Equipo</a>
                                                 </li>
                                             }
-                                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Tec"))
-                                            {
-                                                <li class="nav-item">
-                                                    <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Eliminar">Eliminar Equipo</a>
-                                                </li>
-                                            }
                                         </ul>
                                     </li>
                                 </ul>
