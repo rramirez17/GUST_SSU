@@ -4,11 +4,10 @@
 }
 
 <div class="row text-center">
-    <h1 class="display-4">Actualizar Información de Equipo</h1>
-    <br /><br /><br />
+    <h1 class="display-4">Actualizar Equipo</h1>
 </div>
-
-
+<br />
+<br />
 <div class="container-fluid">
     <div class="row">
         <div class="col-2">
@@ -20,30 +19,72 @@
         <div class="col-8">
             <form id="equipoActualizarForm" class="needs-validation" novalidate>
                 <div class="row">
-                    <div class="col-12">
-                        <label for="codigoEquipo" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigoEquipo" placeholder="" value="" required>
+                    <div class="col-4">
+                        <label for="patrimonio" class="form-label">Codigo de Bienes Patrimoniales</label>
+                        <input type="text" class="form-control" id="patrimonio" placeholder="" value="" required>
                         <div class="invalid-feedback">
-                            Código es requerido.
-                        </div>
-
-                        <label for="numeroActivo" class="form-label">Número de Activo</label>
-                        <input type="text" class="form-control" id="numeroActivo" placeholder="" value="" required>
-                        <div class="invalid-feedback">
-                            Número es requerido.
+                            Codigo es requerido.
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-5">
                         <br /><br />
-                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Registrar</button>
+                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Actualizar</button>
                     </div>
                 </div>
             </form>
         </div>
 
         <div class="col-2"></div>
+        <div />
+
+        <div class="row justify-content-center">
+        </div>
     </div>
 </div>
+
+    @section Scripts{
+        <script>
+            $("#equipoActualizarForm").submit(function (event) {
+                event.preventDefault();
+                if ($('#equipoActualizarForm')[0].checkValidity() === false) {
+                    event.stopPropagation();
+                } else {
+                    //do your ajax submition here
+                    recuperarEquipo();
+                }
+                $('#equipoActualizarForm').addClass('was-validated');
+            });
+
+            function recuperarEquipo() {
+                let url = '@Url.Action("GetEquipoByCodigo","Equipo")';
+                let equipo = {
+                    patrimonio: document.getElementById("patrimonio").value
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {
+                        data: JSON.stringify(equipo)
+                    },
+                    dataType: "json",
+                    success: function (per) {
+                        for (var i = 0; i < per.results.length; i++) {
+                            var nombre = $("<div class='col-4'></div>");
+                            var modelo = $("<div class='col-4'></div>");
+                            var vida = $("<div class='col-4'></div>");
+                            nombre.append(per.results[i].NombreEquipo);
+                            modelo.append(per.results[i].Modelo);
+                            vida.append(per.results[i], VidaUtilEstimada);
+                            $("div .row justify-content-center").append(nombre);
+                            $("div .row justify-content-center").append(modelo);
+                            $("div .row justify-content-center").append(vida);
+                        }
+                    }
+                })
+            }
+
+        </script>
+    }

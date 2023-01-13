@@ -31,6 +31,19 @@
         </div>
     </div>
 
+    <div class="row justify-content-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Modelo</th>
+                </tr>
+            </thead>
+            <tbody class="table-info">
+
+            </tbody>
+        </table>
+    </div>
     <div class="row">
     </div>
 </div>
@@ -48,13 +61,13 @@
                 dataType: "json",
                 success: function (per) {
                     for (var i = 0; i < per.results.length; i++) {
-                        var nombre = $("<div class='col-4'></div>");
-                        var modelo = $("<div class='col-4'></div>");
-                        var vida = $("<div class='col-4'></div>");
+                        var nombre = $("<tr><td></td></tr>");
+                        var modelo = $("<tr><td></td></tr>");
+                        var vida = $("<tr><td></td></tr>");
                         nombre.append(per.results[i].NombreEquipo);
                         modelo.append(per.results[i].Modelo);
-                        $("div .row").append(nombre);
-                        $("div .row").append(modelo);
+                        $("tbody .table-info").append(nombre);
+                        $("tbody .table-info").append(modelo);
                     }
                 }
                 error: function () {
