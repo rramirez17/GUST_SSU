@@ -9,7 +9,7 @@
 </div>
 
 <div class="container-fluid">
-    <div class="row">
+    <div id="main" class="row">
         <div class="col-2">
             <div class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Inventario">Inventario |</a>
@@ -86,6 +86,10 @@
 
         <div class="col-2"></div>
     </div>
+
+    <div id="second" class="row justify-content-center" hidden>
+        <h4 class="mb-3">El equipo se ha registrado correctamente</h4>
+    </div>
 </div>
 
 @section Scripts {
@@ -103,19 +107,20 @@
         });
         
         function registrarEquipo(){
-            let url = '@Url.Action("registrarEquipo","Equipo")';
+            let url = '@Url.Action("PostRegistrarEquipo","Equipo")';
             let equipo = {
-                patrimonio: document.getElementById("patrimonio").value,
-                identificador: document.getElementById("identificador").value,
-                nombreEquipo: document.getElementById("nombreEquipo").value,
-                descripcionEquipo: document.getElementById("descripcionEquipo").value,
-                modeloEquipo: document.getElementById("modeloEquipo").value,
-                vidaUtil: document.getElementById("vidaUtil").value,
-                fechaCompra: document.getElementById("fechaCompra").value,
-                fechaRegistro: document.getElementById("fechaRegistro").value,
-                laboratorio: document.getElementById("laboratorio").value
+                CodigoBienesPatrimoniales: document.getElementById("patrimonio").value,
+                Identificador: document.getElementById("identificador").value,
+                NombreEquipo: document.getElementById("nombreEquipo").value,
+                Modelo: document.getElementById("modeloEquipo").value,
+                VidaUtilEstimada: document.getElementById("vidaUtil").value,
+                FechaCompra: document.getElementById("fechaCompra").value,
+                FechaRegistro: document.getElementById("fechaRegistro").value,
+                Descripcion: document.getElementById("descripcionEquipo").value,
+                LaboratorioId: parseInt(document.getElementById("laboratorio").value),
+                Activo: 1
             }
-
+            console.log(equipo);
             $.ajax({
                 type: "POST",
                 url: url,
@@ -124,6 +129,7 @@
                 },
                 dataType: "json",
                 success: function(results) {
+                    console.log(results);
                     document.getElementById("main").hidden = true;
                     document.getElementById("second").hidden = false
                 },
@@ -150,7 +156,7 @@
                     $(results).each(function () {
                         $(document.createElement('option'))
                             .attr('value', this.Id)
-                            .text(this.NombreEquipo)
+                            .text(this.Codigo)
                             .appendTo(select);
                     });
                 },

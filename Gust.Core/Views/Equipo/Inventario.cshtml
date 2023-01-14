@@ -8,9 +8,9 @@
     </div>
     <div class="row justify-content-center">
         <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="col-3"></div>
-            <div class="col-9">
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <div class="col-4"></div>
+            <div class="col-5">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Registrar">Registrar Equipo</a>
@@ -20,9 +20,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Actualizar">Actualizar Equipo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Eliminar">Eliminar Equipo</a>
                         </li>
                     </ul>
                 </div>
@@ -60,18 +57,21 @@
                 url: url,
                 dataType: "json",
                 success: function (per) {
-                    for (var i = 0; i < per.results.length; i++) {
+                    console.log(per);
+                    console.log(per.length);
+                    /*for (var i = 0; i < per.length; i++) {
                         var nombre = $("<tr><td></td></tr>");
                         var modelo = $("<tr><td></td></tr>");
                         var vida = $("<tr><td></td></tr>");
-                        nombre.append(per.results[i].NombreEquipo);
-                        modelo.append(per.results[i].Modelo);
+                        nombre.append(per[i].NombreEquipo);
+                        modelo.append(per[i].Modelo);
                         $("tbody .table-info").append(nombre);
                         $("tbody .table-info").append(modelo);
-                    }
+                    }*/
                 }
                 error: function () {
                     alert("Super Error!");
+                    conole.log("Super Error!");
                 }
             });
         }

@@ -57,8 +57,9 @@ namespace Gust.Core.Controllers
 
         // Metodo para registrar un equipo
         [HttpPost]
-        public string registrarEquipo(string data)
+        public string PostRegistrarEquipo(string data)
         {
+            
             if (data == null)
             {
                 return JsonConvert.SerializeObject(null);
@@ -103,7 +104,7 @@ namespace Gust.Core.Controllers
             }
         }
 
-        [HttpGet]
+        
         public string GetEquipoByCodigo (string data)
         {
             if (data == null)

@@ -35,11 +35,24 @@
              </form>
         </div>
 
-        <div class="col-2"></div>
+        <div class="col-2">
+            <div id="second" class="row justify-content-center" hidden>
+                <h4 class="mb-3">El equipo no se ha encontrado o no existe</h4>
+            </div>
+        </div>
     </div>
-
+    <br /><br />
     <div class="row justify-content-center">
+        <div class="col-12">
+            <label for="nombreEquipo" class="form-label">Nombre del Equipo</label><br />
+            <input type="text" class="form-control" id="nombreEquipo" value="" /><br />
 
+            <label for="modeloEquipo" class="form-label">Modelo</label><br />
+            <input type="text" class="form-control" id="modeloEquipo" value=""/><br />
+
+            <label for="vidaUtil" class="form-label">Vida Útil Estimada</label><br />
+            <input type="text" class="form-control" id="vidaUtil" placeholder="" value="" /><br />
+        </div>
     </div>
 </div>
 
@@ -59,9 +72,9 @@
         function recuperarEquipo() {
                 let url = '@Url.Action("GetEquipoByCodigo","Equipo")';
             let equipo = {
-                patrimonio: document.getElementById("patrimonio").value
+                CodigoBienesPatrimoniales: document.getElementById("patrimonio").value
             }
-
+            console.log(equipo)
             $.ajax({
                 type: "GET",
                 url: url,
@@ -70,16 +83,27 @@
                 },
                 dataType: "json",
                 success: function (per) {
-                    for (var i = 0; i < per.results.length; i++) {
-                        var nombre = $("<div class='col-4'></div>");
+                    console.log(per);
+                    console.log(per.length);
+                    if(per.length == 0){
+                        document.getElementById("second").hidden = false
+                    }
+                    else{
+                        document.getElementById("second").hidden = true
+                    }
+                    for (var i = 0; i < per.length; i++) {
+                        $("#nombreEquipo").val(per[i].NombreEquipo);
+                        $("#modeloEquipo").val(per[i].Modelo);
+                        $("#vidaUtil").val(per[i].VidaUtilEstimada);
+                        /*var nombre = $("<div class='col-4'></div>");
                         var modelo = $("<div class='col-4'></div>");
                         var vida = $("<div class='col-4'></div>");
-                        nombre.append(per.results[i].NombreEquipo);
-                        modelo.append(per.results[i].Modelo);
-                        vida.append(per.results[i], VidaUtilEstimada);
+                        nombre.append(per[i].NombreEquipo);
+                        modelo.append(per[i].Modelo);
+                        vida.append(per[i].VidaUtilEstimada);
                         $("div .row justify-content-center").append(nombre);
                         $("div .row justify-content-center").append(modelo);
-                        $("div .row justify-content-center").append(vida);
+                        $("div .row justify-content-center").append(vida);*/
                     }
                 }
             })
