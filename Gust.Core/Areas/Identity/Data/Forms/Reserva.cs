@@ -12,8 +12,8 @@ namespace Gust.Core.Areas.Identity.Data.Forms
         public string CedulaPersona { get; set; }
         public string? Duracion { get; set; }
         public string? Descripcion { get; set; }
-        public DateTime? FechaInicio { get; set; }
-        public DateTime? FechaDevolucion { get; set; }
+        public string? FechaInicio { get; set; }
+        public string? FechaDevolucion { get; set; }
 
         public int LabId { get; set; }
 

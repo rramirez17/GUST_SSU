@@ -2,7 +2,77 @@
     ViewData["Title"] = "Admin Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bienvenido al Sistema de Gestión GUST</h1>
-    <p>Pagina para Admin</p>
+<div class="container">
+    <div class="row text-center">
+        <h1 class="display-4">Universidad Tecnológica de Panamá</h1>
+        <h1 class="display-4">Facultad de Ingeniería de Sistemas Computacionales</h1>
+        <h2 class="display-6">Coordinación de Laboratorios</h2>
+        <h3 class="display-7">Control de Entrada de Salones de Préstamo</h3>
+    </div>
+
+    <div class="row justify-content-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Facultad</th>
+                    <th>Nombre</th>
+                    <th>Cédula</th>
+                    <th>Salón</th>
+                    <th>Hora de Entrada</th>
+                    <th>Operador Entrega</th>
+                    <th></th>
+                    <th>Hora de Salida</th>
+                    <th>Operador Recibe</th>
+                </tr>
+            </thead>
+            <tbody class="table-info">
+            </tbody>
+        </table>
+    </div>
+    <div class="row"></div>
 </div>
+
+@section Scripts {
+    <script>
+        recuperarReservas();
+        function recuperarReservas() {
+            let url = '@Url.Action("GetReservas", "Forms")';
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (per) {
+                    console.log(per);
+                    console.log(per.length);
+
+                    /*let xmlDoc = $.parseXML(per);
+                    let xml = $(xmlDoc);
+                    let equipos = xml.find("Table");*/
+                    let rows = '';
+
+                    for (var i = 0; i < per.length; i++) {
+                        rows += "<tr><td>" + per[i].FechaInicio + "</td><td>" + per[i].Descripcion + "</td><td>" + per[i].NombrePersona + "</td><td>" + per[i].CedulaPersona + "</td><td>" + per[i].Codigo + "</td><td>" + per[i].Duracion + "</td><td>" + per[i].UserName  + "<td><td>" + per[i].FechaDevolucion + "<td>" + per[i].Email;
+                        console.log(rows);
+                    }
+                    $('.table tbody').append(rows);
+
+                    /*for (let i = 0; i < per.length; i++) {
+                        let nombre = $("<tr><td></td></tr>");
+                        let modelo = $("<tr><td></td></tr>");
+                        let vida = $("<tr><td></td></tr>");
+                        nombre.append(per[i].NombreEquipo);
+                        modelo.append(per[i].Modelo);
+                        $("tbody .table-info").append(nombre);
+                        $("tbody .table-info").append(modelo);
+                    }*/
+                },
+                error: function () {
+                    alert("Super Error!");
+                    conole.log("Super Error!");
+                }
+            });
+        }
+    </script>
+}

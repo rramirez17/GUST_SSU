@@ -239,11 +239,11 @@ namespace Gust.Core.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime?>("FechaDevolucion")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FechaDevolucion")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FechaInicio")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FechaInicio")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LabId")
                         .HasColumnType("int");
@@ -355,17 +355,17 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "77b64aaf-f270-4fe6-b0c6-3718af6ced19",
+                            Id = "78973209-8fc3-4277-85c2-68e1444dc3fc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e90dc5cf-1187-4067-8454-61bf3f45c2ca",
+                            ConcurrencyStamp = "f1641aed-2f73-40b8-b70a-105a0d99302e",
                             Email = "luis.villalaz1@utp.ac.pa",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUIS.VILLALAZ1@UTP.AC.PA",
                             NormalizedUserName = "LUIS.VILLALAZ1@UTP.AC.PA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMPxpgnyiQJodQ62KQJrbz5ekoHfBYz4e8R4X0MkZkm/BPbwzIbfae5mVhwOHCNv4g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIeL8M4ew7A+LmAO67juZaPG/iNK6pkT+VWbmranU0oKhRo92jwk3wfNAPEsloCTzw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64b170e7-4ca3-4594-b64d-ea484fbb2ed5",
+                            SecurityStamp = "a61eb90d-d93a-4600-9000-333c15975044",
                             TwoFactorEnabled = false,
                             UserName = "luis.villalaz1@utp.ac.pa"
                         });
@@ -455,15 +455,15 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fc2e50c4-b652-46d7-b025-cbf92b42bb38",
-                            ConcurrencyStamp = "501d5b77-8a97-4e71-ab01-222cbf092c71",
+                            Id = "ea281ba9-88c9-464a-aa16-bed6de2e64fd",
+                            ConcurrencyStamp = "0cd998a4-423b-4f56-9760-db0f601bdc94",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "9bb6727e-7751-4754-b332-d89577981437",
-                            ConcurrencyStamp = "3c332d7d-d63b-4cd5-bbb1-46c5d0508af2",
+                            Id = "3b2649bd-683f-4ff4-b4a0-61397a887a8e",
+                            ConcurrencyStamp = "5ce93c67-bd0d-4862-aa9b-ac4ea6fbe4f7",
                             Name = "Tec",
                             NormalizedName = "TEC"
                         });
@@ -560,13 +560,13 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "77b64aaf-f270-4fe6-b0c6-3718af6ced19",
-                            RoleId = "fc2e50c4-b652-46d7-b025-cbf92b42bb38"
+                            UserId = "78973209-8fc3-4277-85c2-68e1444dc3fc",
+                            RoleId = "ea281ba9-88c9-464a-aa16-bed6de2e64fd"
                         },
                         new
                         {
-                            UserId = "77b64aaf-f270-4fe6-b0c6-3718af6ced19",
-                            RoleId = "9bb6727e-7751-4754-b332-d89577981437"
+                            UserId = "78973209-8fc3-4277-85c2-68e1444dc3fc",
+                            RoleId = "3b2649bd-683f-4ff4-b4a0-61397a887a8e"
                         });
                 });
 

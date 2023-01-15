@@ -160,6 +160,24 @@ namespace Gust.Core.Controllers
             }
         }
 
+        public string GetReservas()
+        {
+            try
+            {
+                var reservas = _context.Reserva
+                    .Include(x => x.Laboratorio)
+                    .Select(x => new { x.Id,x.FechaInicio,x.Descripcion ,x.NombrePersona,x.CedulaPersona, x.Laboratorio.Codigo, x.Duracion ,x.UsuarioEntrega.UserName , x.FechaDevolucion, x.UsuarioRecibe.Email })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(reservas);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
         // Metodo para insertar formulario
         [HttpPost]
         public string SubmitPrestamo(string data)
@@ -209,6 +227,9 @@ namespace Gust.Core.Controllers
                 }
 
                 reserva.UsuarioEntregaId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                reserva.FechaInicio = DateTime.Now.ToString("dd/MM/yyyy");
+                reserva.Duracion = DateTime.Now.ToString("hh:mm tt", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+
 
 
                 _context.Reserva.Add(reserva);
@@ -264,7 +285,7 @@ namespace Gust.Core.Controllers
                 }
 
                 reserva.UsuarioRecibeId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                reserva.FechaDevolucion = DateTime.Now;
+                reserva.FechaDevolucion = DateTime.Now.ToString("hh:mm tt", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
                 _context.Reserva.Update(reserva);
                 _context.SaveChanges();
