@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Gust.Core.Areas.Identity.Data;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Gust.Core.Areas.Identity.Data.Tasks;
+using Microsoft.Win32;
 
 namespace Gust.Core.Controllers
 {
@@ -47,6 +49,22 @@ namespace Gust.Core.Controllers
             return View();
         }
 
+        public IActionResult Tareas()
+        {
+            return View();
+        }
+
+        public IActionResult RegistrarTarea()
+        {
+            return View();
+        }
+
+        public IActionResult ActualizarTarea()
+        {
+            return View();
+        }
+
+
         [HttpGet]
         public string GetEquipos()
         {
@@ -83,6 +101,7 @@ namespace Gust.Core.Controllers
             }
         }
 
+        // Metodo para mostrar tareas
         [HttpGet]
         public string GetTareas()
         {
@@ -90,7 +109,7 @@ namespace Gust.Core.Controllers
             {
                 var tareas = _context.Tarea
                     .Where(x => x.EstadoTarea == "En progreso" || x.EstadoTarea == "Sin iniciar")
-                    .Select(x => new { x.Id})
+                    .Select(x => new { x.Id, x.Nombre, x.Especificacion, x.FechaAsignacion, x.FechaFinalizacion, x.EstadoTarea, x.PersonaEncargadaId })
                     .ToList();
 
                 return JsonConvert.SerializeObject(tareas);
@@ -101,6 +120,124 @@ namespace Gust.Core.Controllers
                 return JsonConvert.SerializeObject(null);
             }
         }
+
+        
+        public string GetTareasActualizar()
+        {
+            try
+            {
+                var tareas = _context.Tarea
+                    .Select(x => new { x.Nombre, x.FechaAsignacion, x.FechaFinalizacion})
+                    .ToList(); 
+
+                return JsonConvert.SerializeObject(tareas);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+       
+
+        public string GetTareaByCodigo(string data)
+        {
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+            try
+            {
+                var tarea = JsonConvert.DeserializeObject<Tarea>(data);
+                if (tarea == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                var tareaConsultada = _context.Tarea
+                    .Where(x => x.Id == tarea.Id)
+                    .Select(x => new { x.Id, x.Nombre, x.Especificacion, x.FechaAsignacion, x.FechaFinalizacion, x.EstadoTarea, x.PersonaEncargadaId})
+                    .ToList();
+
+                return JsonConvert.SerializeObject(tareaConsultada);
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+        // Metodo para crear tarea
+        [HttpPost]
+        public string SubmitTarea(string data)
+        {
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+
+            try
+            {
+                var tarea = JsonConvert.DeserializeObject<Tarea>(data);
+                if (tarea == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                tarea.PersonaEncargadaId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                tarea.FechaAsignacion = DateTime.Now;
+                
+
+                _context.Tarea.Add(tarea);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(tarea);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+       
+
+        // Metodo para modificar tarea 
+        [HttpPut]
+        public string ModificarTarea(string data)
+        {
+
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+            try
+            {
+                var info = JsonConvert.DeserializeObject<Tarea>(data);
+                if (info == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                _context.Tarea.Update(info);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(info);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
+
 
         public string GetLaboratorios()
         {
@@ -209,6 +346,7 @@ namespace Gust.Core.Controllers
             }
         }
 
+       
         // Metodo para insertar formulario reserva lab
         [HttpPost]
         public string SubmitReserva(string data)

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Gust.Core.Migrations
 {
-    public partial class Migrations : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -343,14 +343,14 @@ namespace Gust.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3b2649bd-683f-4ff4-b4a0-61397a887a8e", "5ce93c67-bd0d-4862-aa9b-ac4ea6fbe4f7", "Tec", "TEC" },
-                    { "ea281ba9-88c9-464a-aa16-bed6de2e64fd", "0cd998a4-423b-4f56-9760-db0f601bdc94", "Administrador", "ADMINISTRADOR" }
+                    { "3270b58f-cf83-4800-b98f-71a9b9db7a69", "57b7a748-8e81-423c-adda-0e1fd682374a", "Tec", "TEC" },
+                    { "d63f03fb-c3f3-4801-9945-bf371b114301", "007df59a-0762-4381-8263-04db8395da01", "Administrador", "ADMINISTRADOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Cedula", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombre", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Posicion", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "78973209-8fc3-4277-85c2-68e1444dc3fc", 0, null, "f1641aed-2f73-40b8-b70a-105a0d99302e", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEIeL8M4ew7A+LmAO67juZaPG/iNK6pkT+VWbmranU0oKhRo92jwk3wfNAPEsloCTzw==", null, false, null, "a61eb90d-d93a-4600-9000-333c15975044", false, "luis.villalaz1@utp.ac.pa" });
+                values: new object[] { "ebfed43e-65b7-420e-adbf-bdd6f15a3475", 0, null, "118e3297-57f4-4770-9e41-a6aaff27f2b5", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEAyUO2hUaqgaaAdbjOfP571IlCWvonJBR4MJswitj2JB/z9O6R5NiCwXL7hqIiIT0w==", null, false, null, "bf293f22-f426-4a62-8d55-8a32b0afaf8b", false, "luis.villalaz1@utp.ac.pa" });
 
             migrationBuilder.InsertData(
                 table: "Equipo",
@@ -365,12 +365,12 @@ namespace Gust.Core.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "3b2649bd-683f-4ff4-b4a0-61397a887a8e", "78973209-8fc3-4277-85c2-68e1444dc3fc" });
+                values: new object[] { "3270b58f-cf83-4800-b98f-71a9b9db7a69", "ebfed43e-65b7-420e-adbf-bdd6f15a3475" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "ea281ba9-88c9-464a-aa16-bed6de2e64fd", "78973209-8fc3-4277-85c2-68e1444dc3fc" });
+                values: new object[] { "d63f03fb-c3f3-4801-9945-bf371b114301", "ebfed43e-65b7-420e-adbf-bdd6f15a3475" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

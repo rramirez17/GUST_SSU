@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewData["Title"] = "RegistrarTarea page";
+}
+
+<div class="row text-center">
+    <h1 class="display-4">Registrar Tarea</h1>
+    <br /><br /><br />
+</div>
+
+<div class="container-fluid">
+  
+    <div class="col-2">
+        <div class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Tareas">Tareas |</a>
+        </div>
+    </div>
+        
+        <div class="col-8">
+            <form id="CrearTareaForm" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="nombreTarea" class="form-label">Nombre de la tarea</label>
+                        <input type="text" class="form-control" id="NombreTarea" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Nombre de la tarea es requerido.
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="descripcion" class="form-label">Descripcion</label>
+                        <textarea class="form-control" id="descripcion"  rows="3" cols="12" placeholder="" value="" required>
+
+                        </textarea>
+                       
+                        <div class="invalid-feedback">
+                            Descripcion es requerido.
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-6">
+                        <label for="estadoTarea" class="form-label">Estado de la tarea</label><br />
+                        <select class="form-select" id="estadoTarea" required>
+                            <option value="Completado">Completado</option>
+                            <option value="En progreso">En progreso</option>
+                            <option value="Sin iniciar">Sin iniciar</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Selecione un estado valido.
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                  
+                    <div class="col-6">
+                        <label for="fechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
+                        <input type="date" class="form-control" id="fechaFinalizacion" placeholder="" value="" required><br /><br />
+                    </div>
+                </div>
+
+                
+                <br /><br />
+                <div class="row">
+                    <div class="col-5">
+                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Crear Tarea</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+
+    <div id="second" class="row justify-content-center" hidden>
+        <h4 class="mb-3">La tarea se creo exitosamente</h4>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        
+        $("#CrearTareaForm").submit(function (event) {
+            event.preventDefault();
+            if ($('#CrearTareaForm')[0].checkValidity() === false) {
+                event.stopPropagation();
+            } else {
+                //do your ajax submition here
+                crearTarea();
+            }
+            $('#CrearTareaForm').addClass('was-validated');
+        });
+        
+        function crearTarea(){
+            let url = '@Url.Action("SubmitTarea","Forms")';
+            let tarea = {
+                NombreTarea: document.getElementById("NombreTarea").value,
+                Descripcion: document.getElementById("descripcion").value,
+                Estado: document.getElementById("estadoTarea").value,
+                fechaFinalizacion: document.getElementById("fechaFinalizacion").value
+            }
+            console.log(tarea);
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    data: JSON.stringify(tarea)
+                },
+                dataType: "json",
+                success: function(results) {
+                    console.log(results);
+                    document.getElementById("main").hidden = true;
+                    document.getElementById("second").hidden = false
+                },
+                error: function() {
+                    alert("Super Error!");
+                }
+            });
+        }
+
+        function PopulatePersonaEncargada() {
+            let url = '@Url.Action("GetTareasActualizar", "Forms")';
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (results) {
+                    let select = $('#tarea');
+
+                    console.log(results);
+                    console.log(select);
+
+                    select.empty();
+                    $(results).each(function () {
+                        $(document.createElement('option'))
+                            .attr('value', this.Id)
+                            .text('Tarea: ' + this.NombreTarea)
+                            .appendTo(select);
+                    });
+                },
+                error: function () {
+                    alert("Super Error!");
+                }
+            });
+        }
+
+        
+    </script>
+}
+
