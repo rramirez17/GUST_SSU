@@ -85,6 +85,33 @@ namespace Gust.Core.Controllers
             }
         }
 
+        public string PostActualizarEquipo(string data)
+        {
+
+            if (data == null)
+            {
+                return JsonConvert.SerializeObject(null);
+            }
+
+            try
+            {
+                var registro = JsonConvert.DeserializeObject<Equipo>(data);
+                if (registro == null)
+                {
+                    throw new Exception("Null Object");
+                }
+
+                _context.Equipo.Update(registro);
+                _context.SaveChanges();
+
+                return JsonConvert.SerializeObject(registro);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
 
         [HttpGet]
         public string GetEquiposInventario()
@@ -122,7 +149,7 @@ namespace Gust.Core.Controllers
 
                 var equipoConsultado = _context.Equipo
                     .Where(x => x.CodigoBienesPatrimoniales == registro.CodigoBienesPatrimoniales)
-                    .Select(x => new { x.Id, x.NombreEquipo, x.Modelo, x.VidaUtilEstimada })
+                    .Select(x => new { x.Id, x.CodigoBienesPatrimoniales, x.Identificador, x.NombreEquipo, x.Modelo, x.VidaUtilEstimada, x.FechaCompra, x.FechaRegistro, x.Descripcion, x.LaboratorioId, x.Activo })
                     .ToList();
 
                 return JsonConvert.SerializeObject(equipoConsultado);

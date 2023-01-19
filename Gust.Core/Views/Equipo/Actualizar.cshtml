@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-5">
                         <br /><br />
-                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Actualizar</button>
+                        <button id="submit" class="w-100 btn btn-primary btn-lg" type="submit">Buscar</button>
                     </div>
                 </div>
             </form>
@@ -38,14 +38,33 @@
 
         <div class="col-2"></div>
         <div />
+    </div>
+    <br /><br />
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form id="actualizarForm" class="needs-validation" novalidate>
+                <label for="nombreEquipo" class="form-label">Nombre del Equipo</label><br />
+                <input type="text" class="form-control" id="nombreEquipo" value="" /><br />
 
-        <div class="row justify-content-center">
+                <label for="modeloEquipo" class="form-label">Modelo</label><br />
+                <input type="text" class="form-control" id="modeloEquipo" value="" /><br />
+
+                <label for="vidaUtil" class="form-label">Vida Útil Estimada</label><br />
+                <input type="text" class="form-control" id="vidaUtil" placeholder="" value="" /><br />
+
+                <label for="descripcionEquipo" class="form-label">Descripción del Equipo</label><br />
+                <textarea class="form-control" id="descripcionEquipo" rows="5" cols="50" value""></textarea><br /><br />
+
+                <button id="submitAct" class="w-100 btn btn-primary btn-lg" type="submit">Actualizar</button>
+            </form>
         </div>
     </div>
 </div>
 
     @section Scripts{
         <script>
+            let equipoGeneral;
+
             $("#equipoActualizarForm").submit(function (event) {
                 event.preventDefault();
                 if ($('#equipoActualizarForm')[0].checkValidity() === false) {
@@ -60,9 +79,9 @@
             function recuperarEquipo() {
                 let url = '@Url.Action("GetEquipoByCodigo","Equipo")';
                 let equipo = {
-                    patrimonio: document.getElementById("patrimonio").value
+                    CodigoBienesPatrimoniales: document.getElementById("patrimonio").value
                 }
-
+                console.log(equipo)
                 $.ajax({
                     type: "GET",
                     url: url,
@@ -71,20 +90,76 @@
                     },
                     dataType: "json",
                     success: function (per) {
-                        for (var i = 0; i < per.results.length; i++) {
-                            var nombre = $("<div class='col-4'></div>");
+                        console.log(per);
+                        equipoGeneral = per;
+                        console.log(per.length);
+                        /*if (per.length == 0) {
+                            document.getElementById("second").hidden = false
+                        }
+                        else {
+                            document.getElementById("second").hidden = true
+                        }*/
+                        for (var i = 0; i < per.length; i++) {
+                            $("#nombreEquipo").val(per[i].NombreEquipo);
+                            $("#modeloEquipo").val(per[i].Modelo);
+                            $("#vidaUtil").val(per[i].VidaUtilEstimada);
+                            $("#descripcionEquipo").val(per[i].Descripcion);
+                            /*var nombre = $("<div class='col-4'></div>");
                             var modelo = $("<div class='col-4'></div>");
                             var vida = $("<div class='col-4'></div>");
-                            nombre.append(per.results[i].NombreEquipo);
-                            modelo.append(per.results[i].Modelo);
-                            vida.append(per.results[i], VidaUtilEstimada);
+                            nombre.append(per[i].NombreEquipo);
+                            modelo.append(per[i].Modelo);
+                            vida.append(per[i].VidaUtilEstimada);
                             $("div .row justify-content-center").append(nombre);
                             $("div .row justify-content-center").append(modelo);
-                            $("div .row justify-content-center").append(vida);
+                            $("div .row justify-content-center").append(vida);*/
                         }
                     }
-                })
+                });
             }
 
+
+        $("#actualizarForm").submit(function (event) {
+            event.preventDefault();
+            if ($('#actualizarForm')[0].checkValidity() === false) {
+                event.stopPropagation();
+            } else {
+                //do your ajax submition here
+                actualizarEquipo();
+            }
+            $('#actualizarForm').addClass('was-validated');
+        });
+
+        function actualizarEquipo() {
+            let url = '@Url.Action("PostActualizarEquipo","Equipo")';
+            let equipo = {
+                Id: equipoGeneral[0].Id,
+                CodigoBienesPatrimoniales: equipoGeneral[0].CodigoBienesPatrimoniales,
+                Identificador: equipoGeneral[0].Identificador,
+                NombreEquipo: document.getElementById("nombreEquipo").value,
+                Modelo: document.getElementById("modeloEquipo").value,
+                VidaUtilEstimada: document.getElementById("vidaUtil").value,
+                FechaCompra: equipoGeneral[0].FechaCompra,
+                FechaRegistro: equipoGeneral[0].FechaRegistro,
+                Descripcion: document.getElementById("descripcionEquipo").value,
+                LaboratorioId: equipoGeneral[0].LaboratorioId,
+                Activo: equipoGeneral[0].Activo
+            }
+            console.log(equipo);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    data: JSON.stringify(equipo)
+                },
+                dataType: "json",
+                success: function (results) {
+                    console.log(results);
+                },
+                error: function () {
+                    alert("Super Error!");
+                }
+            });
+        }
         </script>
     }
