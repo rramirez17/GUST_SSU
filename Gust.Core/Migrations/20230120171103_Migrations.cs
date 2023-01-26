@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Gust.Core.Migrations
 {
-    public partial class init : Migration
+    public partial class Migrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,7 +194,7 @@ namespace Gust.Core.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Especificacion = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    Especificacion = table.Column<string>(type: "nvarchar(105)", maxLength: 105, nullable: true),
                     FechaAsignacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaFinalizacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EstadoTarea = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -343,14 +343,14 @@ namespace Gust.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3270b58f-cf83-4800-b98f-71a9b9db7a69", "57b7a748-8e81-423c-adda-0e1fd682374a", "Tec", "TEC" },
-                    { "d63f03fb-c3f3-4801-9945-bf371b114301", "007df59a-0762-4381-8263-04db8395da01", "Administrador", "ADMINISTRADOR" }
+                    { "d62d9ca1-1e9b-408c-b5e7-b10f1eeea7c6", "b0efb05d-45ab-4a5f-b2ec-06def818640b", "Administrador", "ADMINISTRADOR" },
+                    { "ffdc84a5-9672-43e3-95a5-5d7354829769", "e54b395d-4997-4f86-8274-9c57ca4440a0", "Tec", "TEC" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Cedula", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombre", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Posicion", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "ebfed43e-65b7-420e-adbf-bdd6f15a3475", 0, null, "118e3297-57f4-4770-9e41-a6aaff27f2b5", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEAyUO2hUaqgaaAdbjOfP571IlCWvonJBR4MJswitj2JB/z9O6R5NiCwXL7hqIiIT0w==", null, false, null, "bf293f22-f426-4a62-8d55-8a32b0afaf8b", false, "luis.villalaz1@utp.ac.pa" });
+                values: new object[] { "5e9c5595-5492-47c5-a7bd-39b5e62d8093", 0, null, "58f7e9f6-d727-4eca-ac69-126033821ceb", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEAzFxLuB+dRul/7Q0K1/HBDgTJMgH/t5t1A2xGXJ8/5sQlm8vXMa7U0+1fnaiS+uTg==", null, false, null, "3995073c-b042-4899-942e-e9e68a8a148f", false, "luis.villalaz1@utp.ac.pa" });
 
             migrationBuilder.InsertData(
                 table: "Equipo",
@@ -365,12 +365,12 @@ namespace Gust.Core.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "3270b58f-cf83-4800-b98f-71a9b9db7a69", "ebfed43e-65b7-420e-adbf-bdd6f15a3475" });
+                values: new object[] { "d62d9ca1-1e9b-408c-b5e7-b10f1eeea7c6", "5e9c5595-5492-47c5-a7bd-39b5e62d8093" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "d63f03fb-c3f3-4801-9945-bf371b114301", "ebfed43e-65b7-420e-adbf-bdd6f15a3475" });
+                values: new object[] { "ffdc84a5-9672-43e3-95a5-5d7354829769", "5e9c5595-5492-47c5-a7bd-39b5e62d8093" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -20,15 +20,15 @@
             <form id="CrearTareaForm" class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-6">
-                        <label for="nombreTarea" class="form-label">Nombre de la tarea</label>
-                        <input type="text" class="form-control" id="NombreTarea" placeholder="" value="" required>
+                    <label for="NombreTarea" class="form-label">Nombre de la tarea</label>
+                    <input type="text" class="form-control" id="NombreTarea" placeholder="" value="" required>
                         <div class="invalid-feedback">
                             Nombre de la tarea es requerido.
                         </div>
                     </div>
                     <div class="col-6">
-                        <label for="descripcion" class="form-label">Descripcion</label>
-                        <textarea class="form-control" id="descripcion"  rows="3" cols="12" placeholder="" value="" required>
+                        <label for="Especificacion" class="form-label">Descripcion</label>
+                    <textarea class="form-control" id="Especificacion" rows="3" cols="12" placeholder="" value="" required>
 
                         </textarea>
                        
@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="estadoTarea" class="form-label">Estado de la tarea</label><br />
-                        <select class="form-select" id="estadoTarea" required>
+                    <select class="form-select" id="estadoTarea" required>
                             <option value="Completado">Completado</option>
                             <option value="En progreso">En progreso</option>
                             <option value="Sin iniciar">Sin iniciar</option>
@@ -56,8 +56,8 @@
                 <div class="row">
                   
                     <div class="col-6">
-                        <label for="fechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
-                        <input type="date" class="form-control" id="fechaFinalizacion" placeholder="" value="" required><br /><br />
+                    <label for="FechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
+                    <input type="date" class="form-control" id="FechaFinalizacion" placeholder="" value="" required><br /><br />
                     </div>
                 </div>
 
@@ -96,10 +96,10 @@
         function crearTarea(){
             let url = '@Url.Action("SubmitTarea","Forms")';
             let tarea = {
-                NombreTarea: document.getElementById("NombreTarea").value,
-                Descripcion: document.getElementById("descripcion").value,
-                Estado: document.getElementById("estadoTarea").value,
-                fechaFinalizacion: document.getElementById("fechaFinalizacion").value
+                Nombre: document.getElementById("NombreTarea").value,
+                Especificacion: document.getElementById("Especificacion").value,
+                EstadoTarea: document.getElementById("estadoTarea").value,
+                FechaFinalizacion: document.getElementById("FechaFinalizacion").value
             }
             console.log(tarea);
 
@@ -121,32 +121,7 @@
             });
         }
 
-        function PopulatePersonaEncargada() {
-            let url = '@Url.Action("GetTareasActualizar", "Forms")';
-
-            $.ajax({
-                type: "GET",
-                url: url,
-                dataType: "json",
-                success: function (results) {
-                    let select = $('#tarea');
-
-                    console.log(results);
-                    console.log(select);
-
-                    select.empty();
-                    $(results).each(function () {
-                        $(document.createElement('option'))
-                            .attr('value', this.Id)
-                            .text('Tarea: ' + this.NombreTarea)
-                            .appendTo(select);
-                    });
-                },
-                error: function () {
-                    alert("Super Error!");
-                }
-            });
-        }
+        
 
         
     </script>

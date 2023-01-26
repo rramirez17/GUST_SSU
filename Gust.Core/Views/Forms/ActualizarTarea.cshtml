@@ -96,8 +96,8 @@
                 </div>
 
                 <div class="col-6">
-                    <label for="fechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
-                    <input type="date" class="form-control" id="fechaFinalizacion" placeholder="" value="" required><br /><br />
+                            <label for="FechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
+                    <input type="date" class="form-control" id="FechaFinalizacion" placeholder="" value="" required><br /><br />
                 </div>
             </div>
 
@@ -129,7 +129,7 @@
                         $(results).each(function () {
                             $(document.createElement('option'))
                                 .attr('value', this.Id)
-                                .text('Tarea: ' + this.NombreTarea)
+                                .text('Tarea: ' + this.Nombre + ' Fecha de Asignación: '+this.FechaAsignacion)
                                 .appendTo(select);
                         });
                     },
@@ -139,28 +139,28 @@
                 });
             }
 
-        $("#equipoActualizarForm").submit(function (event) {
+            $("#ActualizarTareaForm").submit(function (event) {
             event.preventDefault();
-            if ($('#equipoActualizarForm')[0].checkValidity() === false) {
+                if ($('#ActualizarTareaForm')[0].checkValidity() === false) {
                 event.stopPropagation();
             } else {
                 //do your ajax submition here
                 recuperarTarea();
             }
-            $('#equipoActualizarForm').addClass('was-validated');
+                $('#ActualizarTareaForm').addClass('was-validated');
         });
 
         function recuperarTarea() {
             let url = '@Url.Action("GetTareaByCodigo","Forms")';
-            let equipo = {
-                CodigoBienesPatrimoniales: document.getElementById("patrimonio").value
+            let codigoTarea = {
+                    codigoTarea: document.getElementById("tarea").value
             }
-            console.log(equipo)
+                console.log(codigoTarea)
             $.ajax({
                 type: "GET",
                 url: url,
                 data: {
-                    data: JSON.stringify(equipo)
+                        data: JSON.stringify(codigoTarea)
                 },
                 dataType: "json",
                 success: function (per) {
@@ -178,32 +178,24 @@
                         $("#descripcion").val(per[i].Especificacion);
                         $("#estadoTarea").val(per[i].EstadoTarea);
                         $("#personaEncargada").val(per[i].PersonaEncargadaId);
-                        $("#fechaAsignacion").val(per[i].fechaAsignacion);
-                        $("#fechaFinalizacion").val(per[i].fechaFinalizacion);
-                        /*var nombre = $("<div class='col-4'></div>");
-                        var modelo = $("<div class='col-4'></div>");
-                        var vida = $("<div class='col-4'></div>");
-                        nombre.append(per[i].NombreEquipo);
-                        modelo.append(per[i].Modelo);
-                        vida.append(per[i].VidaUtilEstimada);
-                        $("div .row justify-content-center").append(nombre);
-                        $("div .row justify-content-center").append(modelo);
-                        $("div .row justify-content-center").append(vida);*/
+                        $("#fechaAsignacion").val(per[i].FechaAsignacion);
+                        $("#FechaFinalizacion").val(per[i].FechaFinalizacion);
+                        
                     }
                 }
             });
         }
 
 
-        $("#actualizarForm").submit(function (event) {
+            $("#actualizarForm").submit(function (event) {
             event.preventDefault();
-            if ($('#actualizarForm')[0].checkValidity() === false) {
+                if ($('#actualizarForm')[0].checkValidity() === false) {
                 event.stopPropagation();
             } else {
                 //do your ajax submition here
                 actualizarTarea();
             }
-            $('#actualizarForm').addClass('was-validated');
+                $('#actualizarForm').addClass('was-validated');
         });
 
         function actualizarTarea() {
@@ -211,8 +203,8 @@
               let tarea = {
                 NombreTarea: document.getElementById("NombreTarea").value,
                 Descripcion: document.getElementById("descripcion").value,
-                Estado: document.getElementById("estadoTarea").value
-                fechaFinalizacion: document.getElementById("fechaFinalizacion").value
+                Estado: document.getElementById("estadoTarea").value,
+                FechaFinalizacion: document.getElementById("FechaFinalizacion").value
             }
             console.log(tarea);
             $.ajax({

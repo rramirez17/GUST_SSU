@@ -30,7 +30,7 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
             builder.Property(u => u.Nombre)
                 .HasMaxLength(20);
             builder.Property(u => u.Especificacion)
-                .HasMaxLength(35)
+                .HasMaxLength(550)
                 .IsRequired(false);
             builder.Property(u => u.FechaAsignacion)
                 .HasMaxLength(20)

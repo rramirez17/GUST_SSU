@@ -127,7 +127,7 @@ namespace Gust.Core.Controllers
             try
             {
                 var tareas = _context.Tarea
-                    .Select(x => new { x.Nombre, x.FechaAsignacion, x.FechaFinalizacion})
+                    .Select(x => new { x.Id,x.Nombre, x.FechaAsignacion})
                     .ToList(); 
 
                 return JsonConvert.SerializeObject(tareas);
@@ -157,7 +157,7 @@ namespace Gust.Core.Controllers
                 }
 
                 var tareaConsultada = _context.Tarea
-                    .Where(x => x.Id == tarea.Id)
+                    //.Where(x => x.Id == tarea.Id)
                     .Select(x => new { x.Id, x.Nombre, x.Especificacion, x.FechaAsignacion, x.FechaFinalizacion, x.EstadoTarea, x.PersonaEncargadaId})
                     .ToList();
 

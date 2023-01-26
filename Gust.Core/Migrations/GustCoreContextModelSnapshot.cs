@@ -355,17 +355,17 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ebfed43e-65b7-420e-adbf-bdd6f15a3475",
+                            Id = "5e9c5595-5492-47c5-a7bd-39b5e62d8093",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "118e3297-57f4-4770-9e41-a6aaff27f2b5",
+                            ConcurrencyStamp = "58f7e9f6-d727-4eca-ac69-126033821ceb",
                             Email = "luis.villalaz1@utp.ac.pa",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUIS.VILLALAZ1@UTP.AC.PA",
                             NormalizedUserName = "LUIS.VILLALAZ1@UTP.AC.PA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAyUO2hUaqgaaAdbjOfP571IlCWvonJBR4MJswitj2JB/z9O6R5NiCwXL7hqIiIT0w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAzFxLuB+dRul/7Q0K1/HBDgTJMgH/t5t1A2xGXJ8/5sQlm8vXMa7U0+1fnaiS+uTg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bf293f22-f426-4a62-8d55-8a32b0afaf8b",
+                            SecurityStamp = "3995073c-b042-4899-942e-e9e68a8a148f",
                             TwoFactorEnabled = false,
                             UserName = "luis.villalaz1@utp.ac.pa"
                         });
@@ -397,9 +397,8 @@ namespace Gust.Core.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Especificacion")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
+                        .HasMaxLength(105)
+                        .HasColumnType("nvarchar(105)");
 
                     b.Property<string>("EstadoTarea")
                         .IsRequired()
@@ -455,15 +454,15 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d63f03fb-c3f3-4801-9945-bf371b114301",
-                            ConcurrencyStamp = "007df59a-0762-4381-8263-04db8395da01",
+                            Id = "d62d9ca1-1e9b-408c-b5e7-b10f1eeea7c6",
+                            ConcurrencyStamp = "b0efb05d-45ab-4a5f-b2ec-06def818640b",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "3270b58f-cf83-4800-b98f-71a9b9db7a69",
-                            ConcurrencyStamp = "57b7a748-8e81-423c-adda-0e1fd682374a",
+                            Id = "ffdc84a5-9672-43e3-95a5-5d7354829769",
+                            ConcurrencyStamp = "e54b395d-4997-4f86-8274-9c57ca4440a0",
                             Name = "Tec",
                             NormalizedName = "TEC"
                         });
@@ -560,13 +559,13 @@ namespace Gust.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "ebfed43e-65b7-420e-adbf-bdd6f15a3475",
-                            RoleId = "d63f03fb-c3f3-4801-9945-bf371b114301"
+                            UserId = "5e9c5595-5492-47c5-a7bd-39b5e62d8093",
+                            RoleId = "d62d9ca1-1e9b-408c-b5e7-b10f1eeea7c6"
                         },
                         new
                         {
-                            UserId = "ebfed43e-65b7-420e-adbf-bdd6f15a3475",
-                            RoleId = "3270b58f-cf83-4800-b98f-71a9b9db7a69"
+                            UserId = "5e9c5595-5492-47c5-a7bd-39b5e62d8093",
+                            RoleId = "ffdc84a5-9672-43e3-95a5-5d7354829769"
                         });
                 });
 

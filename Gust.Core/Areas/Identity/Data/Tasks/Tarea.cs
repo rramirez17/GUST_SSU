@@ -11,8 +11,8 @@ namespace Gust.Core.Areas.Identity.Data.Tasks
         public int Id { get; set; }
         [MaxLength(20)]
         public string? Nombre { get; set; }
-        [MaxLength(35)]
-        public string Especificacion { get; set; }
+        [MaxLength(105)]
+        public string? Especificacion { get; set; }
         public DateTime FechaAsignacion { get; set; }
         public DateTime? FechaFinalizacion { get; set; }
 
