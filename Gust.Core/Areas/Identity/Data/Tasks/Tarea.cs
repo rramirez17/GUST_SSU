@@ -11,15 +11,16 @@ namespace Gust.Core.Areas.Identity.Data.Tasks
         public int Id { get; set; }
         [MaxLength(20)]
         public string? Nombre { get; set; }
-        [MaxLength(105)]
+        [MaxLength(550)]
         public string? Especificacion { get; set; }
-        public DateTime FechaAsignacion { get; set; }
+        public DateTime? FechaAsignacion { get; set; }
         public DateTime? FechaFinalizacion { get; set; }
 
         public string EstadoTarea { get; set; }
+
         public string PersonaEncargadaId { get; set; }
-        [ForeignKey("PersonaEncargadaId")]
+
         public virtual GustCoreUser PersonaEncargada { get; set; }
-        public virtual ICollection<Equipo> Equipos { get; set; }
+        
     }
 }

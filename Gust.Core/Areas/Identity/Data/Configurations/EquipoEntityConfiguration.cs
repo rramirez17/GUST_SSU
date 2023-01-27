@@ -22,9 +22,6 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
                 .HasForeignKey("LaboratorioId")
                 .HasConstraintName("FK_Equipo_LaboratorioId");
             builder
-                .HasMany(e => e.Tareas)
-                .WithMany(e => e.Equipos);
-            builder
                 .HasMany(e => e.Prestamos)
                 .WithOne(e => e.Equipo);
 

@@ -188,30 +188,6 @@ namespace Gust.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tarea",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Especificacion = table.Column<string>(type: "nvarchar(105)", maxLength: 105, nullable: true),
-                    FechaAsignacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaFinalizacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EstadoTarea = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonaEncargadaId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tarea", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tarea_AspNetUsers_PersonaEncargadaId",
-                        column: x => x.PersonaEncargadaId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Equipo",
                 columns: table => new
                 {
@@ -277,30 +253,6 @@ namespace Gust.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EquipoTarea",
-                columns: table => new
-                {
-                    EquiposId = table.Column<int>(type: "int", nullable: false),
-                    TareasId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EquipoTarea", x => new { x.EquiposId, x.TareasId });
-                    table.ForeignKey(
-                        name: "FK_EquipoTarea_Equipo_EquiposId",
-                        column: x => x.EquiposId,
-                        principalTable: "Equipo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EquipoTarea_Tarea_TareasId",
-                        column: x => x.TareasId,
-                        principalTable: "Tarea",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Prestamo",
                 columns: table => new
                 {
@@ -338,19 +290,49 @@ namespace Gust.Core.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tarea",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Especificacion = table.Column<string>(type: "nvarchar(550)", maxLength: 550, nullable: true),
+                    FechaAsignacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FechaFinalizacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EstadoTarea = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonaEncargadaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EquipoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tarea", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tarea_AspNetUsers_PersonaEncargadaId",
+                        column: x => x.PersonaEncargadaId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tarea_Equipo_EquipoId",
+                        column: x => x.EquipoId,
+                        principalTable: "Equipo",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "d62d9ca1-1e9b-408c-b5e7-b10f1eeea7c6", "b0efb05d-45ab-4a5f-b2ec-06def818640b", "Administrador", "ADMINISTRADOR" },
-                    { "ffdc84a5-9672-43e3-95a5-5d7354829769", "e54b395d-4997-4f86-8274-9c57ca4440a0", "Tec", "TEC" }
+                    { "cf4a7619-5692-46f2-b01f-c511ae9e95e6", "29a51ec3-a8f5-4df9-ba7a-2bed4d49795e", "Administrador", "ADMINISTRADOR" },
+                    { "ea8bf471-feb4-4b22-b87d-cd9c4bf91df2", "41b6ad1d-eff5-45a8-9e81-6728e93d1a7a", "Tec", "TEC" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Cedula", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombre", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Posicion", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "5e9c5595-5492-47c5-a7bd-39b5e62d8093", 0, null, "58f7e9f6-d727-4eca-ac69-126033821ceb", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEAzFxLuB+dRul/7Q0K1/HBDgTJMgH/t5t1A2xGXJ8/5sQlm8vXMa7U0+1fnaiS+uTg==", null, false, null, "3995073c-b042-4899-942e-e9e68a8a148f", false, "luis.villalaz1@utp.ac.pa" });
+                values: new object[] { "b858b018-8c27-4e46-a34c-08e192b19e5c", 0, null, "4971dc7b-88be-4639-8ed2-57d5dd2b6417", "luis.villalaz1@utp.ac.pa", true, false, null, null, "LUIS.VILLALAZ1@UTP.AC.PA", "LUIS.VILLALAZ1@UTP.AC.PA", "AQAAAAEAACcQAAAAEO/0VfuZ458LEBsa3fG7oL8iSRgHPTkhlMkTME54/M3/yn1i3eS7T3lEmbB3hNEIRw==", null, false, null, "4dfe2348-3173-4be5-888f-4c01d8cd7422", false, "luis.villalaz1@utp.ac.pa" });
 
             migrationBuilder.InsertData(
                 table: "Equipo",
@@ -365,12 +347,12 @@ namespace Gust.Core.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "d62d9ca1-1e9b-408c-b5e7-b10f1eeea7c6", "5e9c5595-5492-47c5-a7bd-39b5e62d8093" });
+                values: new object[] { "cf4a7619-5692-46f2-b01f-c511ae9e95e6", "b858b018-8c27-4e46-a34c-08e192b19e5c" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "ffdc84a5-9672-43e3-95a5-5d7354829769", "5e9c5595-5492-47c5-a7bd-39b5e62d8093" });
+                values: new object[] { "ea8bf471-feb4-4b22-b87d-cd9c4bf91df2", "b858b018-8c27-4e46-a34c-08e192b19e5c" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -438,11 +420,6 @@ namespace Gust.Core.Migrations
                 column: "LaboratorioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EquipoTarea_TareasId",
-                table: "EquipoTarea",
-                column: "TareasId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Laboratorio_Codigo",
                 table: "Laboratorio",
                 column: "Codigo",
@@ -480,6 +457,11 @@ namespace Gust.Core.Migrations
                 column: "UsuarioRecibeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tarea_EquipoId",
+                table: "Tarea",
+                column: "EquipoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tarea_PersonaEncargadaId",
                 table: "Tarea",
                 column: "PersonaEncargadaId");
@@ -503,9 +485,6 @@ namespace Gust.Core.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "EquipoTarea");
-
-            migrationBuilder.DropTable(
                 name: "EstadoTarea");
 
             migrationBuilder.DropTable(
@@ -515,16 +494,16 @@ namespace Gust.Core.Migrations
                 name: "Reserva");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
                 name: "Tarea");
 
             migrationBuilder.DropTable(
-                name: "Equipo");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Equipo");
 
             migrationBuilder.DropTable(
                 name: "Laboratorio");

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "ActualizarTarea page";
+    ViewData["Title"] = "Actualizar Tarea";
 }
 
 <div class="row text-center">
@@ -19,7 +19,7 @@
         <div class="col-8 ">
             <form id="ActualizarTareaForm" class="needs-validation" novalidate>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-12">
                     
                         <label for="tarea" class="form-label">Tareas</label>
                         <select class="form-select" id="tarea" required>
@@ -51,6 +51,11 @@
             <form id="actualizarForm" class="needs-validation" novalidate>
             <div class="row">
                 <div class="col-4">
+                     <label for="Id" class="form-label">Id de la tarea</label>
+                    <input type="text" class="form-control" id="Id" placeholder="" value="" disabled>
+                    
+                </div>
+                <div class="col-4">
                     <label for="nombreTarea" class="form-label">Nombre de la tarea</label>
                     <input type="text" class="form-control" id="NombreTarea" placeholder="" value="" required>
                     <div class="invalid-feedback">
@@ -70,9 +75,9 @@
                 <div class="col-6">
                     <label for="estadoTarea" class="form-label">Estado de la tarea</label><br />
                     <select class="form-select" id="estadoTarea" required>
-                        <option value="value1">Completado</option>
-                        <option value="value2">En progreso</option>
-                        <option value="value3">Sin iniciar</option>
+                                <option value="Completado">Completado</option>
+                                <option value="En progreso">En progreso</option>
+                                <option value="Sin iniciar">Sin iniciar</option>
                     </select>
                     <div class="invalid-feedback">
                         Selecione un estado valido.
@@ -92,12 +97,12 @@
             <div class="row">
                 <div class="col-6">
                     <label for="fechaAsignacion" class="form-label">Fecha de inicio</label><br />
-                    <input type="date" class="form-control" id="fechaAsignacion" placeholder="" value=""><br /><br />
+                            <input type="datetime-local" class="form-control" id="fechaAsignacion" placeholder="" value=""><br /><br />
                 </div>
 
                 <div class="col-6">
                             <label for="FechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
-                    <input type="date" class="form-control" id="FechaFinalizacion" placeholder="" value="" required><br /><br />
+                            <input type="datetime-local" class="form-control" id="FechaFinalizacion" placeholder="" value="" required><br /><br />
                 </div>
             </div>
 
@@ -110,7 +115,8 @@
     @section Scripts{
         <script>
 
-            PopulateTarea();   
+            PopulateTarea();
+            PopulateUsuario();
 
             function PopulateTarea() {
             let url = '@Url.Action("GetTareasActualizar", "Forms")';
@@ -139,6 +145,33 @@
                 });
             }
 
+            function PopulateUsuario() {
+                let url = '@Url.Action("GetUsuarios", "Forms")';
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (results) {
+                        let select = $('#personaEncargada');
+
+                        console.log(results);
+                        console.log(select);
+
+                        select.empty();
+                        $(results).each(function () {
+                            $(document.createElement('option'))
+                                .attr('value', this.Id)
+                                .text('Usuario: ' + this.UserName)
+                                .appendTo(select);
+                        });
+                    },
+                    error: function () {
+                        alert("Super Error!");
+                    }
+                });
+            }
+
             $("#ActualizarTareaForm").submit(function (event) {
             event.preventDefault();
                 if ($('#ActualizarTareaForm')[0].checkValidity() === false) {
@@ -152,28 +185,24 @@
 
         function recuperarTarea() {
             let url = '@Url.Action("GetTareaByCodigo","Forms")';
-            let codigoTarea = {
-                    codigoTarea: document.getElementById("tarea").value
+            let Id = {
+                    Id: document.getElementById("tarea").value
             }
-                console.log(codigoTarea)
+                console.log(Id)
             $.ajax({
                 type: "GET",
                 url: url,
                 data: {
-                        data: JSON.stringify(codigoTarea)
+                        data: JSON.stringify(Id)
                 },
                 dataType: "json",
                 success: function (per) {
                     console.log(per);
                     tarea = per;
                     console.log(per.length);
-                    /*if (per.length == 0) {
-                        document.getElementById("second").hidden = false
-                    }
-                    else {
-                        document.getElementById("second").hidden = true
-                    }*/
+               
                     for (var i = 0; i < per.length; i++) {
+                        $("#Id").val(per[i].Id);
                         $("#NombreTarea").val(per[i].Nombre);
                         $("#descripcion").val(per[i].Especificacion);
                         $("#estadoTarea").val(per[i].EstadoTarea);
@@ -187,25 +216,27 @@
         }
 
 
-            $("#actualizarForm").submit(function (event) {
-            event.preventDefault();
-                if ($('#actualizarForm')[0].checkValidity() === false) {
-                event.stopPropagation();
-            } else {
-                //do your ajax submition here
-                actualizarTarea();
-            }
-                $('#actualizarForm').addClass('was-validated');
+        $("#actualizarForm").submit(function (event) {
+        event.preventDefault();
+            if ($('#actualizarForm')[0].checkValidity() === false) {
+            event.stopPropagation();
+        } else {
+            actualizarTarea();
+        }
+            $('#actualizarForm').addClass('was-validated');
         });
 
         function actualizarTarea() {
-            let url = '@Url.Action("ModificarTarea","Forms")';
+              let url = '@Url.Action("PostActualizarTarea","Forms")';
               let tarea = {
-                NombreTarea: document.getElementById("NombreTarea").value,
-                Descripcion: document.getElementById("descripcion").value,
-                Estado: document.getElementById("estadoTarea").value,
-                FechaFinalizacion: document.getElementById("FechaFinalizacion").value
-            }
+                Id:document.getElementById("Id").value,
+                Nombre: document.getElementById("NombreTarea").value,
+                Especificacion: document.getElementById("descripcion").value,
+                EstadoTarea: document.getElementById("estadoTarea").value,
+                FechaAsignacion: document.getElementById("fechaAsignacion").value,
+                FechaFinalizacion: document.getElementById("FechaFinalizacion").value,
+                PersonaEncargadaId: document.getElementById("personaEncargada").value
+            };
             console.log(tarea);
             $.ajax({
                 type: "POST",

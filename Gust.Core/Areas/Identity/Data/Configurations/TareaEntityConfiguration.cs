@@ -28,7 +28,7 @@ namespace Gust.Core.Areas.Identity.Data.Configurations
                 .UseIdentityColumn();
 
             builder.Property(u => u.Nombre)
-                .HasMaxLength(20);
+                .HasMaxLength(550);
             builder.Property(u => u.Especificacion)
                 .HasMaxLength(550)
                 .IsRequired(false);

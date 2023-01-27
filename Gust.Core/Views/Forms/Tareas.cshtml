@@ -1,12 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Admin Page";
+    ViewData["Title"] = "Administrador-Préstamo de Laboratorio";
 }
 
 <div class="container">
     <div class="row text-center">
         <h1 class="display-4">Universidad Tecnológica de Panamá</h1>
         <h1 class="display-4">Facultad de Ingeniería de Sistemas Computacionales</h1>
-        <h2 class="display-6">Coordinación de Laboratorios</h2>
+        <h2 class="display-6">Unidad de Soporte Técnico</h2
+        <h3 class="display-8">Tareas</h3>
+        <br/>
     </div>
 
     <div class="row justify-content-center">
@@ -42,30 +44,19 @@
                     console.log(per);
                     console.log(per.length);
 
-                    /*let xmlDoc = $.parseXML(per);
-                    let xml = $(xmlDoc);
-                    let equipos = xml.find("Table");*/
                     let rows = '';
 
                     for (var i = 0; i < per.length; i++) {
-                        rows += "<tr><td>" + per[i].Nombre + "</td><td>" + per[i].Especificacion + "</td><td>" + per[i].FechaAsignacion + "</td><td>" + per[i].FechaFinalizacion + "</td><td>" + per[i].EstadoTarea + "</td><td>" + per[i].PersonaEncargadaId+"</td></tr>";
+                        rows += "<tr><td>" + per[i].Nombre + "</td><td>" + per[i].Especificacion + "</td><td>" + per[i].FechaAsignacion + "</td><td>" + per[i].FechaFinalizacion + "</td><td>" + per[i].EstadoTarea + "</td><td>" + per[i].UserName+"</td></tr>";
                         console.log(rows);
                     }
                     $('.table tbody').append(rows);
 
-                    /*for (let i = 0; i < per.length; i++) {
-                        let nombre = $("<tr><td></td></tr>");
-                        let modelo = $("<tr><td></td></tr>");
-                        let vida = $("<tr><td></td></tr>");
-                        nombre.append(per[i].NombreEquipo);
-                        modelo.append(per[i].Modelo);
-                        $("tbody .table-info").append(nombre);
-                        $("tbody .table-info").append(modelo);
-                    }*/
+   
                 },
                 error: function () {
                     alert("Super Error!");
-                    conole.log("Super Error!");
+                    console.log("Super Error!");
                 }
             });
         }

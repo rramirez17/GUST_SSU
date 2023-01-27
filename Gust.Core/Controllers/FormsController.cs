@@ -108,8 +108,9 @@ namespace Gust.Core.Controllers
             try
             {
                 var tareas = _context.Tarea
+                    .Include(x => x.PersonaEncargada)
                     .Where(x => x.EstadoTarea == "En progreso" || x.EstadoTarea == "Sin iniciar")
-                    .Select(x => new { x.Id, x.Nombre, x.Especificacion, x.FechaAsignacion, x.FechaFinalizacion, x.EstadoTarea, x.PersonaEncargadaId })
+                    .Select(x => new { x.Id, x.Nombre, x.Especificacion, x.FechaAsignacion, x.FechaFinalizacion, x.EstadoTarea, x.PersonaEncargada.UserName })
                     .ToList();
 
                 return JsonConvert.SerializeObject(tareas);
@@ -121,7 +122,23 @@ namespace Gust.Core.Controllers
             }
         }
 
-        
+        public string GetUsuarios()
+        {
+            try
+            {
+                var user = _context.Users
+                    .Select(x => new { x.Id, x.UserName })
+                    .ToList();
+
+                return JsonConvert.SerializeObject(user);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error: {e}", e.Message);
+                return JsonConvert.SerializeObject(null);
+            }
+        }
+
         public string GetTareasActualizar()
         {
             try
@@ -157,7 +174,7 @@ namespace Gust.Core.Controllers
                 }
 
                 var tareaConsultada = _context.Tarea
-                    //.Where(x => x.Id == tarea.Id)
+                    .Where(x => x.Id == tarea.Id)
                     .Select(x => new { x.Id, x.Nombre, x.Especificacion, x.FechaAsignacion, x.FechaFinalizacion, x.EstadoTarea, x.PersonaEncargadaId})
                     .ToList();
 
@@ -190,7 +207,6 @@ namespace Gust.Core.Controllers
                 }
 
                 tarea.PersonaEncargadaId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                tarea.FechaAsignacion = DateTime.Now;
                 
 
                 _context.Tarea.Add(tarea);
@@ -208,10 +224,10 @@ namespace Gust.Core.Controllers
        
 
         // Metodo para modificar tarea 
-        [HttpPut]
-        public string ModificarTarea(string data)
-        {
 
+        public string PostActualizarTarea(string data)
+        {
+            
             if (data == null)
             {
                 return JsonConvert.SerializeObject(null);
@@ -219,16 +235,17 @@ namespace Gust.Core.Controllers
 
             try
             {
-                var info = JsonConvert.DeserializeObject<Tarea>(data);
-                if (info == null)
+                
+                var tarea = JsonConvert.DeserializeObject<Tarea>(data);
+                if (tarea == null)
                 {
                     throw new Exception("Null Object");
                 }
 
-                _context.Tarea.Update(info);
+                _context.Tarea.Update(tarea);
                 _context.SaveChanges();
 
-                return JsonConvert.SerializeObject(info);
+                return JsonConvert.SerializeObject(tarea);
             }
             catch (Exception e)
             {

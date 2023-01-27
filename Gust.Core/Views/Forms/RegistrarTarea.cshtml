@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "RegistrarTarea page";
+    ViewData["Title"] = "Registrar Tarea";
 }
 
 <div class="row text-center">
@@ -16,7 +16,7 @@
         </div>
     </div>
         
-        <div class="col-8">
+        <div class="col-12">
             <form id="CrearTareaForm" class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-6">
@@ -54,12 +54,16 @@
                 </div>
 
                 <div class="row">
-                  
-                    <div class="col-6">
-                    <label for="FechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
-                    <input type="date" class="form-control" id="FechaFinalizacion" placeholder="" value="" required><br /><br />
-                    </div>
+                <div class="col-6">
+                    <label for="fechaAsignacion" class="form-label">Fecha de inicio</label><br />
+                            <input type="datetime-local" class="form-control" id="fechaAsignacion" placeholder="" value=""><br /><br />
                 </div>
+
+                <div class="col-6">
+                            <label for="FechaFinalizacion" class="form-label">Fecha de finalizacion</label><br />
+                            <input type="datetime-local" class="form-control" id="FechaFinalizacion" placeholder="" value="" required><br /><br />
+                </div>
+            </div>
 
                 
                 <br /><br />
@@ -99,6 +103,7 @@
                 Nombre: document.getElementById("NombreTarea").value,
                 Especificacion: document.getElementById("Especificacion").value,
                 EstadoTarea: document.getElementById("estadoTarea").value,
+                FechaAsignacion: document.getElementById("fechaAsignacion").value,
                 FechaFinalizacion: document.getElementById("FechaFinalizacion").value
             }
             console.log(tarea);
