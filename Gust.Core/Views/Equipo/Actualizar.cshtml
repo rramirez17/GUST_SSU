@@ -9,7 +9,7 @@
 <br />
 <br />
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" id="main">
         <div class="col-2">
             <div class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Equipo" asp-action="Inventario">Inventario |</a>
@@ -39,8 +39,9 @@
         <div class="col-2"></div>
         <div />
     </div>
+    </div>
     <br /><br />
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="second" hidden>
         <div class="col-12">
             <form id="actualizarForm" class="needs-validation" novalidate>
                 <label for="nombreEquipo" class="form-label">Nombre del Equipo</label><br />
@@ -99,16 +100,12 @@
                             $("#modeloEquipo").val(per[i].Modelo);
                             $("#vidaUtil").val(per[i].VidaUtilEstimada);
                             $("#descripcionEquipo").val(per[i].Descripcion);
-                            /*var nombre = $("<div class='col-4'></div>");
-                            var modelo = $("<div class='col-4'></div>");
-                            var vida = $("<div class='col-4'></div>");
-                            nombre.append(per[i].NombreEquipo);
-                            modelo.append(per[i].Modelo);
-                            vida.append(per[i].VidaUtilEstimada);
-                            $("div .row justify-content-center").append(nombre);
-                            $("div .row justify-content-center").append(modelo);
-                            $("div .row justify-content-center").append(vida);*/
+                            
                         }
+
+                        
+                        document.getElementById("main").hidden = true;
+                        document.getElementById("second").hidden = false
                     }
                 });
             }
@@ -119,7 +116,6 @@
             if ($('#actualizarForm')[0].checkValidity() === false) {
                 event.stopPropagation();
             } else {
-                //do your ajax submition here
                 actualizarEquipo();
             }
             $('#actualizarForm').addClass('was-validated');

@@ -10,7 +10,7 @@
 <br />
 <div class="container-fluid">
    
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="main">
         <div class="col-2">
              <div class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Forms" asp-action="Tareas">Tareas |</a>
@@ -43,10 +43,10 @@
 
         </div>
 
-        
+        </div>
     
     <br /><br />
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="second" hidden>
         <div class="col-12">
             <form id="actualizarForm" class="needs-validation" novalidate>
             <div class="row">
@@ -211,6 +211,9 @@
                         $("#FechaFinalizacion").val(per[i].FechaFinalizacion);
                         
                     }
+
+                        document.getElementById("main").hidden = true;
+                        document.getElementById("second").hidden = false
                 }
             });
         }
