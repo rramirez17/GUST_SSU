@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewData["Title"] = "Actualizar Tarea";
+    ViewData["Title"] = "Modificar Tarea";
 }
 
 <div class="row text-center">
-    <h1 class="display-4">Actualizar Tarea</h1>
+    <h1 class="display-4">Modificar Tarea</h1>
 </div>
 <br />
 <br />
@@ -106,9 +106,13 @@
                 </div>
             </div>
 
-                <button id="submitAct" class="w-100 btn btn-primary btn-lg" type="submit">Actualizar</button>
+                <button id="submitAct" class="w-100 btn btn-primary btn-lg" type="submit">Modificar</button>
             </form>
         </div>
+    </div>
+
+    <div id="third" class="row justify-content-center" hidden>
+        <h4 class="mb-3">La tarea se modificó exitosamente</h4>
     </div>
 </div>
 
@@ -213,7 +217,8 @@
                     }
 
                         document.getElementById("main").hidden = true;
-                        document.getElementById("second").hidden = false
+                        document.getElementById("second").hidden = false;
+                        document.getElementById("third").hidden = true
                 }
             });
         }
@@ -250,6 +255,9 @@
                 dataType: "json",
                 success: function (results) {
                     console.log(results);
+                    document.getElementById("main").hidden = true;
+                    document.getElementById("second").hidden = true;
+                    document.getElementById("third").hidden = false
                 },
                 error: function () {
                     alert("Super Error!");

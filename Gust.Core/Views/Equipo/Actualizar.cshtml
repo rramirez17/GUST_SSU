@@ -60,6 +60,11 @@
             </form>
         </div>
     </div>
+
+    <div id="third" class="row justify-content-center" hidden>
+        <h4 class="mb-3">El equipo se actualizó exitosamente</h4>
+    </div>
+
 </div>
 
     @section Scripts{
@@ -105,7 +110,8 @@
 
                         
                         document.getElementById("main").hidden = true;
-                        document.getElementById("second").hidden = false
+                        document.getElementById("second").hidden = false;
+                        document.getElementById("third").hidden = true
                     }
                 });
             }
@@ -146,6 +152,9 @@
                 dataType: "json",
                 success: function (results) {
                     console.log(results);
+                    document.getElementById("main").hidden = true;
+                        document.getElementById("second").hidden = true;
+                        document.getElementById("third").hidden = false
                 },
                 error: function () {
                     alert("Super Error!");
