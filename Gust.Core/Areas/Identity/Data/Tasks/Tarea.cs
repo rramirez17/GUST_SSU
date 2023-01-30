@@ -9,9 +9,7 @@ namespace Gust.Core.Areas.Identity.Data.Tasks
     {
         [Key]
         public int Id { get; set; }
-        [MaxLength(20)]
         public string? Nombre { get; set; }
-        [MaxLength(550)]
         public string? Especificacion { get; set; }
         public DateTime? FechaAsignacion { get; set; }
         public DateTime? FechaFinalizacion { get; set; }

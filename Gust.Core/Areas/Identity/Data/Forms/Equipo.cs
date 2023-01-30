@@ -27,7 +27,7 @@ namespace Gust.Core.Areas.Identity.Data.Forms
         public int? LaboratorioId { get; set; }
         [ForeignKey("LaboratorioId")]
         public virtual Laboratorio Laboratorio { get; set; }
-        public virtual ICollection<Tarea> Tareas { get; set; }
+
         public virtual ICollection<Prestamo> Prestamos { get; set; }
         [Required]
         [DefaultValue(false)]
